@@ -1,6 +1,6 @@
 {
   "name": "angular-typescript",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "dependencies": {
     "angular": "^1.4.0",
     "angular-resource": "^1.4.0"
@@ -9,6 +9,7 @@
     "angular-mocks": "^1.4.0"
   },
   "authors": ["Jakub Strojewski <jakub.strojewski@gmail.com>"],
+  "ignore": [],
   "keywords": [
     "TypeScript",
     "AngularJS"
