@@ -11,6 +11,6 @@
   "overrides": {
     "angular": {"main": ["angular.js"]},
     "angular-mocks": {"main": ["angular-mocks.js"]},
-    "angular-resource": {"main": ["angular-resource.js"]},
+    "angular-resource": {"main": ["angular-resource.js"]}
   }
 }

@@ -7,8 +7,9 @@ pids
 *.pid
 *.seed
 
-# Coverage directory used by tools like istanbul
-coverage
+# Teemporary directory
+.tmp/
 
 # Dependency directory
-node_modules
+node_modules/
+bower_components/
