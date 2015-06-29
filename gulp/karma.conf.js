@@ -5,8 +5,11 @@ module.exports = function (config) {
             '../bower_components/angular/angular.js',
             '../bower_components/angular-mocks/angular-mocks.js',
             '../bower_components/angular-resource/angular-resource.js',
+            '../.tmp/angular.js',
+            '../.tmp/resource.js',
+            '../.tmp/module.js',
             '../.tmp/*.js',
-            '../*spec.coffee'
+            '../test/*.coffee'
         ],
 
         exclude: [
@@ -29,7 +32,7 @@ module.exports = function (config) {
         ],
         preprocessors: {
             '../.tmp/*.js': ['coverage'],
-            '../*spec.coffee': ['coffee']
+            '../test/*.coffee': ['coffee']
         },
         captureTimeout: 60000,
         singleRun: false,

@@ -7,7 +7,7 @@ var ts = require('gulp-typescript');
 var tslint = require('gulp-tslint');
 
 gulp.task('ts-build', function () {
-    return gulp.src(['*.ts', 'ts/**/*.d.ts']).pipe(ts({
+    return gulp.src(['*.ts', 'ts/**/*.d.ts', 'test/**/*.ts']).pipe(ts({
         declarationFiles: false,
         noExternalResolve: true,
         target: 'ES5',
@@ -16,7 +16,7 @@ gulp.task('ts-build', function () {
 });
 
 gulp.task('ts-lint', function () {
-    return gulp.src('*.ts')
+    return gulp.src(['*.ts', 'test/**/*.ts'])
         .pipe(tslint({configuration: {rules: require('../ts/tslint.json')}}))
         .pipe(tslint.report('verbose'));
 });

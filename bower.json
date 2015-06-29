@@ -1,12 +1,12 @@
 {
   "name": "angular-typescript",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "dependencies": {
-    "angular": "^1.4.0",
-    "angular-resource": "^1.4.0"
+    "angular": "^1.2.0",
+    "angular-resource": "^1.2.0"
   },
   "devDependencies": {
-    "angular-mocks": "^1.4.0"
+    "angular-mocks": "^1.2.0"
   },
   "authors": ["Jakub Strojewski <jakub.strojewski@gmail.com>"],
   "ignore": [],

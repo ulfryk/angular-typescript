@@ -1,5 +1,5 @@
 
-module app {
+module at {
 
     'use strict';
 
@@ -39,21 +39,21 @@ module app {
         return target;
     }
 
-    export function inject(...args: string[]): IClassAnnotationDecorator {
+    export function inject(...args: string[]): at.IClassAnnotationDecorator {
         return (target: any): void => {
             target.$inject = args;
         };
     }
 
-    export function service(moduleName: string, serviceName: string): IClassAnnotationDecorator {
+    export function service(moduleName: string, serviceName: string): at.IClassAnnotationDecorator {
         return instantiate(moduleName, serviceName, 'service');
     }
 
-    export function controller(moduleName: string, ctrlName: string): IClassAnnotationDecorator {
+    export function controller(moduleName: string, ctrlName: string): at.IClassAnnotationDecorator {
         return instantiate(moduleName, ctrlName, 'controller');
     }
 
-    export function directive(moduleName: string, directiveName: string): IClassAnnotationDecorator {
+    export function directive(moduleName: string, directiveName: string): at.IClassAnnotationDecorator {
         return (target: any): void => {
             var config: angular.IDirective;
             if (target.controller) {
@@ -71,10 +71,10 @@ module app {
         };
     }
 
-    export function classFactory(moduleName: string, className: string): IClassAnnotationDecorator {
+    export function classFactory(moduleName: string, className: string): at.IClassAnnotationDecorator {
         return (target: any): void => {
             angular.module(moduleName).factory(className,
-            /* istanbul ignore next */(...args: any[]) => attachInjects(target, ...args));
+                /* istanbul ignore next */(...args: any[]) => at.attachInjects(target, ...args));
         };
     }
     /* tslint:enable:no-any */
