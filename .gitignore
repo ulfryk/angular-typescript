@@ -9,6 +9,7 @@ pids
 
 # Teemporary directory
 .tmp/
+coverage/
 
 # Dependency directory
 node_modules/

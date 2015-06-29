@@ -20,7 +20,11 @@ gulp.task('karma-tdd', function (done) {
 gulp.task('karma-ci', function (done) {
     karma.start({
         configFile: config,
-        coverageReporter: {type : 'text'},
+        coverageReporter: {
+            type: 'lcov',
+            subdir: 'lcov',
+            dir: '../coverage/'
+        },
         singleRun: true,
         autoWatch: false
     }, done);

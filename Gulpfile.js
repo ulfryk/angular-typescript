@@ -5,9 +5,20 @@ var runSequence = require('run-sequence');
 
 require('require-dir')('./gulp/');
 
-/**
- * emulate jenkins locally
+/*
+ * emulate ci locally
  */
 gulp.task('default', function (done) {
     runSequence('ts-lint', 'ts-build', 'karma-ci-short', done);
+});
+
+/*
+ * ci
+ */
+gulp.task('ci', function (done) {
+    runSequence(
+        'ts',
+        'karma-ci',
+        done
+    );
 });

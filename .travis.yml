@@ -7,4 +7,6 @@ before_script:
   - npm install -g gulp
   - npm install -g bower
   - bower install
-script: gulp coverage
+script:
+  - gulp ci
+  - cat ./coverage/lcov/lcov.info  | ./node_modules/coveralls/bin/coveralls.js
