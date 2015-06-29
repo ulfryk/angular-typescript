@@ -1,5 +1,10 @@
+language: node_js
+node_js:
+  - "0.10"
 install:
-  - npm install -g gulp
   - npm install
+before_script:
+  - npm install -g gulp
+  - npm install -g bower
   - bower install
 script: gulp coverage
