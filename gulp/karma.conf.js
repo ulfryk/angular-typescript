@@ -11,7 +11,6 @@ module.exports = function (config) {
             '../.tmp/*.js',
             '../test/*.coffee'
         ],
-
         exclude: [
             '../.tmp/js/modules/**/*-run.js',
             '../.tmp/js/modules/app/configs/**/*.js'
