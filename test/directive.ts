@@ -36,13 +36,15 @@ module test {
 
         constructor(
             $scope: IFirstComponentScope,
+            /* tslint:disable:variable-name */
             private $_$parse: angular.IParseService
+            /* tslint:enable:variable-name */
         ) {
             $scope.name = this.name = 'FirstTestCtrl';
         }
 
         public setCtrlName(name: string): void {
-            this.name = name;
+            this.$_$parse('name').assign(this, name);
         }
 
     }

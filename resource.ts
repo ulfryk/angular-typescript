@@ -38,23 +38,21 @@ module at {
     }
 
     export function resource(moduleName: string, className: string): IClassAnnotationDecorator {
-        return (Target: any): void => {
-            /* tslint:disable:variable-name no-console */
+        return (target: any): void => {
             function resourceClassFactory($resource: ResourceService, ...args: any[]): any {
-                const Resource: ResourceClass = $resource(Target.url, Target.params, Target.actions, Target.options);
-                return attachInjects(angular.extend(Resource, angular.extend(Target, Resource, {
-                    prototype: angular.extend(Resource.prototype, angular.extend(Target.prototype, {
-                        $_Resource: Resource
+                const newResource: ResourceClass = $resource(target.url, target.params, target.actions, target.options);
+                return attachInjects(angular.extend(newResource, angular.extend(target, newResource, {
+                    prototype: angular.extend(newResource.prototype, angular.extend(target.prototype, {
+                        /* tslint:disable:variable-name */
+                        $_Resource: newResource
+                        /* tslint:enable:variable-name */
                     }))
                 })), ...args);
             }
-            resourceClassFactory.$inject = (['$resource']).concat(Target.$inject || []);
+            resourceClassFactory.$inject = (['$resource']).concat(target.$inject || []);
             angular.module(moduleName).factory(className, resourceClassFactory);
-            angular.module(moduleName).run([className, (cls: any) => {
-                console.log(className, cls);
-            }]);
         };
     }
-    /* tslint:enable:no-any variable-name */
+    /* tslint:enable:no-any */
 
 }
