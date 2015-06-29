@@ -73,8 +73,13 @@ module at {
 
     export function classFactory(moduleName: string, className: string): at.IClassAnnotationDecorator {
         return (target: any): void => {
-            angular.module(moduleName).factory(className,
-                /* istanbul ignore next */(...args: any[]) => at.attachInjects(target, ...args));
+            function factory(...args: any[]): any {
+                return at.attachInjects(target, ...args);
+            }
+            if (target.$inject && target.$inject.length > 0) {
+                factory.$inject = target.$inject.slice(0);
+            }
+            angular.module(moduleName).factory(className, factory);
         };
     }
     /* tslint:enable:no-any */
