@@ -3,18 +3,15 @@ module.exports = function (config) {
         basePath: '',
         files: [
             '../bower_components/angular/angular.js',
-            '../bower_components/angular-mocks/angular-mocks.js',
+            '../.tmp/at-angular.js',
             '../bower_components/angular-resource/angular-resource.js',
-            '../.tmp/angular.js',
-            '../.tmp/resource.js',
+            '../.tmp/at-angular-resource.js',
+            '../bower_components/angular-mocks/angular-mocks.js',
             '../.tmp/module.js',
             '../.tmp/*.js',
             '../test/*.coffee'
         ],
-        exclude: [
-            '../.tmp/js/modules/**/*-run.js',
-            '../.tmp/js/modules/app/configs/**/*.js'
-        ],
+        exclude: [],
         reporters: ['dots', 'coverage'],
         port: 9876,
         runnerPort: 9100,

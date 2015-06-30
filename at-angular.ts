@@ -56,6 +56,7 @@ module at {
     export function directive(moduleName: string, directiveName: string): at.IClassAnnotationDecorator {
         return (target: any): void => {
             var config: angular.IDirective;
+            /* istanbul ignore else */
             if (target.controller) {
                 controller(moduleName, target.controller.split(' ').shift())(target);
             }
@@ -63,8 +64,8 @@ module at {
                 config: angular.IDirective,
                 property: string
             ) => {
-                return angular.isDefined(target[property]) ?
-                    angular.extend(config, {[property]: target[property]}) : config;
+                return angular.isDefined(target[property]) ? angular.extend(config, {[property]: target[property]}) :
+                    config; /* istanbul ignore next */
             }, {controller: target, scope: Boolean(target.templateUrl)});
 
             angular.module(moduleName).directive(directiveName, () => (config));
@@ -76,6 +77,7 @@ module at {
             function factory(...args: any[]): any {
                 return at.attachInjects(target, ...args);
             }
+            /* istanbul ignore else */
             if (target.$inject && target.$inject.length > 0) {
                 factory.$inject = target.$inject.slice(0);
             }

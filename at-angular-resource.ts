@@ -1,3 +1,4 @@
+/* istanbul ignore next */
 
 module at {
 
@@ -49,7 +50,7 @@ module at {
                     }))
                 })), ...args);
             }
-            resourceClassFactory.$inject = (['$resource']).concat(target.$inject || []);
+            resourceClassFactory.$inject = (['$resource']).concat(target.$inject /* istanbul ignore next */ || []);
             angular.module(moduleName).factory(className, resourceClassFactory);
         };
     }

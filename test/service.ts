@@ -1,4 +1,4 @@
-/* istanbul ignore if */
+/* istanbul ignore if else */
 
 module test {
 
