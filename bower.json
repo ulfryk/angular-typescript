@@ -9,21 +9,23 @@
     "angular-mocks": "^1.2.0"
   },
   "authors": ["Jakub Strojewski <jakub.strojewski@gmail.com>"],
-  "ignore": [],
+  "ignore": [
+    "test",
+    "ts",
+    "gulp",
+    ".gitignore",
+    ".travis.yml",
+    "Gulpfile.js"
+  ],
   "keywords": [
     "TypeScript",
     "AngularJS"
   ],
   "license": "WTFPL",
   "main": [
-    "angular.ts",
-    "resource.ts"
+    "at-angular.ts",
+    "at-angular-resource.ts"
   ],
-  "overrides": {
-    "angular": {"main": ["angular.js"]},
-    "angular-mocks": {"main": ["angular-mocks.js"]},
-    "angular-resource": {"main": ["angular-resource.js"]}
-  },
   "repository": {
     "type": "git",
     "url": "git://github.com/ulfryk/angular-typescript.git"
