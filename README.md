@@ -17,7 +17,94 @@ Angular-TypeScript
 
 > TypeScript 1.5 annotations (decorators) for AngularJS 1.x 
 
-Docs
-----
+What ?
+------
 
-Explanations will come…
+**angular-typescript** provides annotation like decorators:
+
+```
+@at.service(moduleName: string, serviceName: string)
+@at.inject(dependencyOne: string, ...dependencies?: string[])
+@at.controller(moduleName: string, controllerName: string)
+@at.directive(moduleName: string, directiveName: string)
+@at.classFactory(moduleName: string, className: string)
+@at.resource(moduleName: string, resourceClassName: string)
+```
+
+Why ?
+-----
+
+Purpose of those decorators is to remove some ugly boilerplate from AngularJS applications written in TypeScript.
+
+How ?
+-----
+
+### Service
+
+No one have to:
+
+```typescript
+class SomeService {
+
+    constructor() {
+        // do stuff
+    }
+    
+    public someMethod(anArg: number): boolean {
+        // do some stuff
+    }
+
+}
+
+angular.module('ngModuleName').service('someService', SomeService);
+```
+
+Using **angular-typescript** it will look like:
+
+```typescript
+@at.service('ngModuleName', 'someService')
+class SomeService {
+
+    constructor() {
+        // do stuff
+    }
+    
+    public someMethod(anArg: number): boolean {
+        // do some stuff
+    }
+
+}
+```
+
+***
+
+### Inject
+
+…
+
+***
+
+### Controller
+
+…
+
+***
+
+### Directive
+
+…
+
+***
+
+### ClassFactory
+
+…
+
+***
+
+### Resource
+
+…
+
+***
+

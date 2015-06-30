@@ -15,7 +15,9 @@
     "gulp",
     ".gitignore",
     ".travis.yml",
-    "Gulpfile.js"
+    "CONTRIBUTING.md",
+    "Gulpfile.js",
+    "package.json"
   ],
   "keywords": [
     "TypeScript",
