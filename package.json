@@ -1,6 +1,6 @@
 {
   "name": "angular-typescript",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "TypeScript 1.5 annotations (decorators) for AngularJS 1.x",
   "repository": {
     "type": "git",
