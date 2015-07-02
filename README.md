@@ -146,7 +146,7 @@ class SomeController {
 
 
 ```typescript
-@controller('ngModuleName', 'atSomeDirective')
+@directive('ngModuleName', 'atSomeDirective')
 class SomeDirectiveController {
 
     public static controllerAs: 'someDirectiveCtrl';
