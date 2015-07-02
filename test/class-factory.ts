@@ -1,5 +1,3 @@
-/* istanbul ignore next */
-
 module test {
 
     'use strict';

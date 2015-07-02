@@ -27,7 +27,7 @@ module.exports = function (config) {
             'karma-phantomjs-launcher'
         ],
         preprocessors: {
-            '../.tmp/*.js': ['coverage'],
+            '../.tmp/at-*.js': ['coverage'],
             '../test/*.coffee': ['coffee']
         },
         captureTimeout: 60000,

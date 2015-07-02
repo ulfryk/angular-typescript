@@ -80,7 +80,7 @@ class SomeService {
 
 ### Inject
 
-```
+```typescript
 @service('ngModuleName', 'someServiceName')
 class SomeService {
 
@@ -120,7 +120,24 @@ class SomeService {
 
 ### Controller
 
-…
+
+```typescript
+@service('ngModuleName', 'SomeController')
+class SomeController {
+
+    constructor(
+        @inject('$scope') $scope: angular.IScope,
+        @inject('$parse') private $$parse: angular.IParseService
+    ) {
+        // do stuff with $scope and $$parse;
+    }
+    
+    public someMethod(anArg: number): boolean {
+        // do some stuff with this.$$parse();
+    }
+
+}
+```
 
 ***
 

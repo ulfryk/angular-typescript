@@ -46,12 +46,6 @@ module at {
 
     export function inject(...args: string[]): at.IClassAnnotationDecorator {
         return (target: any, key?: string, index?: number): void => {
-            console.group('@inject');
-            console.debug('...args', ...args);
-            console.debug('target %O', target, target);
-            console.debug('key', key);
-            console.debug('index', index);
-            console.groupEnd();
             if (angular.isNumber(index)) {
                 target.$inject = target.$inject || [];
                 target.$inject[index] = args[0];

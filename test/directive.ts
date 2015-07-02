@@ -1,5 +1,3 @@
-/* istanbul ignore if else */
-
 module test {
 
     'use strict';
