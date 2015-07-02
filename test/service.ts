@@ -4,7 +4,7 @@ module test {
 
     'use strict';
 
-    @at.service('test', 'testServiceTwo')
+    @service('test', 'testServiceTwo')
     export class TestServiceTwo {
 
         public static $inject: string[] = ['$http', '$parse'];

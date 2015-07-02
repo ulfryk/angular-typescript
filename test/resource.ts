@@ -9,8 +9,8 @@ module test {
         age: number;
     }
 
-    @at.resource('test', 'TestResourceOne')
-    @at.inject('$http', '$parse')
+    @resource('test', 'TestResourceOne')
+    @inject('$http', '$parse')
     export class TestResourceOne implements ITestModel {
         // And to keep proper type, you may add "extends at.Resource"
 

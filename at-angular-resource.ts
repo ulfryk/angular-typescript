@@ -38,6 +38,10 @@ module at {
         public $update(): angular.IPromise<ResourceWithUpdate> { return this.$promise; }
     }
 
+    export interface IResourceAnnotation {
+        (moduleName: string, className: string): IClassAnnotationDecorator;
+    }
+
     export function resource(moduleName: string, className: string): IClassAnnotationDecorator {
         return (target: any): void => {
             function resourceClassFactory($resource: ResourceService, ...args: any[]): any {

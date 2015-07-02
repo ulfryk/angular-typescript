@@ -8,8 +8,8 @@ module test {
         name: string;
     }
 
-    @at.controller('test', 'FirstTestCtrl')
-    @at.inject('$scope', '$parse')
+    @controller('test', 'FirstTestCtrl')
+    @inject('$scope', '$parse')
     export class FirstTestCtrl {
 
         constructor(

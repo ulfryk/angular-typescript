@@ -4,7 +4,7 @@ module test {
 
     'use strict';
 
-    @at.inject('$http', '$parse')
+    @inject('$http', '$parse')
     export class TestServiceOne {
 
         constructor(

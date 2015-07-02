@@ -4,8 +4,8 @@ module test {
 
     'use strict';
 
-    @at.classFactory('test', 'TestClassOne')
-    @at.inject('$http', '$parse')
+    @classFactory('test', 'TestClassOne')
+    @inject('$http', '$parse')
     export class TestClassOne {
 
         public accept: string;

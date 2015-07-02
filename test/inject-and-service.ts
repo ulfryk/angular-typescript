@@ -4,13 +4,12 @@ module test {
 
     'use strict';
 
-    @at.service('test', 'testServiceThree')
-    @at.inject('$http', '$parse')
+    @service('test', 'testServiceThree')
     export class TestServiceThree {
 
         constructor(
-            private $$http: angular.IHttpService,
-            private $$parse: angular.IParseService
+            @inject('$http') private $$http: angular.IHttpService,
+            @inject('$parse') private $$parse: angular.IParseService
         ) {}
 
     }

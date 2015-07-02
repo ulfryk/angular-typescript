@@ -62,7 +62,7 @@ angular.module('ngModuleName').service('someService', SomeService);
 Using **angular-typescript** it will look like:
 
 ```typescript
-@at.service('ngModuleName', 'someService')
+@service('ngModuleName', 'someService')
 class SomeService {
 
     constructor() {
@@ -80,7 +80,41 @@ class SomeService {
 
 ### Inject
 
-…
+```
+@service('ngModuleName', 'someServiceName')
+class SomeService {
+
+    constructor(
+        @inject('$http') $http: angular.IHttpService,
+        @inject('$parse') private $$parse: angular.IParseService
+    ) {
+        // do stuff with $http and $$parse;
+    }
+    
+    public someMethod(anArg: number): boolean {
+        // do some stuff with this.$$parse();
+    }
+
+}
+```
+
+or
+
+```typescript
+@service('ngModuleName', 'someServiceName')
+@inject('$http', '$parse')
+class SomeService {
+
+    constructor($http: angular.IHttpService, private $$parse: angular.IParseService) {
+        // do stuff with $http and $$parse;
+    }
+    
+    public someMethod(anArg: number): boolean {
+        // do some stuff with this.$$parse();
+    }
+
+}
+```
 
 ***
 

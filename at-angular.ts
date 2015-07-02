@@ -21,9 +21,10 @@ module at {
         'transclude'
     ];
 
-    /* tslint:disable:no-any */
+    /* tslint:disable:no-any no-console */
     export interface IClassAnnotationDecorator {
         (target: any): void;
+        (t: any, key: string, index: number): void;
     }
 
     function instantiate(moduleName: string, name: string, mode: string): IClassAnnotationDecorator {
@@ -39,18 +40,45 @@ module at {
         return target;
     }
 
+    export interface IInjectAnnotation {
+        (...args: any[]): IClassAnnotationDecorator;
+    }
+
     export function inject(...args: string[]): at.IClassAnnotationDecorator {
-        return (target: any): void => {
-            target.$inject = args;
+        return (target: any, key?: string, index?: number): void => {
+            console.group('@inject');
+            console.debug('...args', ...args);
+            console.debug('target %O', target, target);
+            console.debug('key', key);
+            console.debug('index', index);
+            console.groupEnd();
+            if (angular.isNumber(index)) {
+                target.$inject = target.$inject || [];
+                target.$inject[index] = args[0];
+            } else {
+                target.$inject = args;
+            }
         };
+    }
+
+    export interface IServiceAnnotation {
+        (moduleName: string, serviceName: string): IClassAnnotationDecorator;
     }
 
     export function service(moduleName: string, serviceName: string): at.IClassAnnotationDecorator {
         return instantiate(moduleName, serviceName, 'service');
     }
 
+    export interface IControllerAnnotation {
+        (moduleName: string, ctrlName: string): IClassAnnotationDecorator;
+    }
+
     export function controller(moduleName: string, ctrlName: string): at.IClassAnnotationDecorator {
         return instantiate(moduleName, ctrlName, 'controller');
+    }
+
+    export interface IDirectiveAnnotation {
+        (moduleName: string, directiveName: string): IClassAnnotationDecorator;
     }
 
     export function directive(moduleName: string, directiveName: string): at.IClassAnnotationDecorator {
@@ -70,6 +98,10 @@ module at {
 
             angular.module(moduleName).directive(directiveName, () => (config));
         };
+    }
+
+    export interface IClassFactoryAnnotation {
+        (moduleName: string, className: string): IClassAnnotationDecorator;
     }
 
     export function classFactory(moduleName: string, className: string): at.IClassAnnotationDecorator {
