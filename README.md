@@ -122,7 +122,7 @@ class SomeService {
 
 
 ```typescript
-@service('ngModuleName', 'SomeController')
+@controller('ngModuleName', 'SomeController')
 class SomeController {
 
     constructor(
@@ -143,7 +143,31 @@ class SomeController {
 
 ### Directive
 
-…
+
+
+```typescript
+@controller('ngModuleName', 'atSomeDirective')
+class SomeDirectiveController {
+
+    public static controllerAs: 'someDirectiveCtrl';
+    public static templateUrl: string = '/partials/some-directive.html';
+    public static link: angular.IDirectiveLinkFn = (scope, element, attrs, ctrl: SomeDirectiveController) => {
+        ctrl.init(attrs.atSomeDirective);
+    };
+
+    constructor(
+        @inject('$scope') private $$scope: angular.IScope,
+        @inject('$parse') private $$parse: angular.IParseService
+    ) {
+        // do stuff with $$scope and $$parse;
+    }
+    
+    public init(anArg: string): boolean {
+        // do some stuff with this.$$parse and this.$$scope
+    }
+
+}
+```
 
 ***
 
