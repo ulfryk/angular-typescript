@@ -173,13 +173,64 @@ class SomeDirectiveController {
 
 ### ClassFactory
 
-…
+```typescript
+@classFactory('test', 'Headers')
+@inject('$http', '$parse')
+class Headers {
+
+    public accept: string;
+
+    private $_$http: angular.IHttpService;
+    private $_$parse: angular.IParseService;
+
+    constructor() {
+        this.accept = this.$_$parse('defaults.headers.common.Accept')(this.$_$http);
+    }
+
+}
+```
+
+and the somewhere else:
+
+```typescript
+    …
+    constructor(
+        @inject('Headers') Headers: Headers
+    ) {
+        this.headers = new Headers();
+    }
+    …
+```
 
 ***
 
 ### Resource
 
-…
+```typescript
+@resource('test', 'UserResource')
+@inject('$http', '$parse')
+class UserResource extends at.Resource {
+
+    public static url: string = '/fake/url';
+
+    public name: string;
+    public age: number;
+
+    private $_$parse: angular.IParseService;
+
+    constructor(model?: ITestModel) {
+        if (model) {
+            this.name = model.name;
+            this.age = model.age;
+        }
+    }
+
+    public getLabel(): string {
+        return `${ this.name }-${ String(this.age) }`;
+    }
+
+}
+```
 
 ***
 
