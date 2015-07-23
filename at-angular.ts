@@ -77,7 +77,7 @@ module at {
 
     export function directive(moduleName: string, directiveName: string): at.IClassAnnotationDecorator {
         return (target: any): void => {
-            var config: angular.IDirective;
+            let config: angular.IDirective;
             /* istanbul ignore else */
             if (target.controller) {
                 controller(moduleName, target.controller.split(' ').shift())(target);
