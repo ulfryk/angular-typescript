@@ -20,8 +20,8 @@ module test {
         public age: number;
 
         /* tslint:disable:variable-name */
-        private $_$http: angular.IHttpService;
-        private $_$parse: angular.IParseService;
+        private $$http: angular.IHttpService;
+        private $$parse: angular.IParseService;
         /* tslint:enable:variable-name */
 
         constructor(model?: ITestModel) {
@@ -33,7 +33,7 @@ module test {
         }
 
         public getLabel(): string {
-            return this.$_$parse('defaults.headers.common.Accept')(this.$_$http) + this.name + String(this.age);
+            return this.$$parse('defaults.headers.common.Accept')(this.$$http) + this.name + String(this.age);
         }
 
     }

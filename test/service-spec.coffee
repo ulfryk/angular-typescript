@@ -30,7 +30,7 @@ describe 'annotations:', ->
     it 'should pass proper dependencies (based on static member "$inject") to service constructor', ->
 
       for dep in test.TestServiceTwo.$inject
-        expect testServiceTwo["$_#{ dep }"]
+        expect testServiceTwo["$$#{ dep.replace('$', '') }"]
         .toBe deps[dep]
 
 

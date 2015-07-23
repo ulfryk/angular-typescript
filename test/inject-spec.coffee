@@ -29,10 +29,10 @@ describe 'annotations:', ->
 
     it 'should make proper dependencies are passed to service constructor on instantiation', ->
 
-      expect testServiceOne.$_$http
+      expect testServiceOne.$$http
       .toBe $http
 
-      expect testServiceOne.$_$parse
+      expect testServiceOne.$$parse
       .toBe $parse
 
 

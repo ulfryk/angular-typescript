@@ -30,20 +30,20 @@ describe 'annotations:', ->
 
     it 'should add proper dependencies to constructor prototype', ->
 
-      expect TestClassOne.prototype.$_$http
+      expect TestClassOne.prototype.$$http
       .toBe $http
 
-      expect TestClassOne.prototype.$_$parse
+      expect TestClassOne.prototype.$$parse
       .toBe $parse
 
     it 'should provide proper dependencies for instance', ->
 
       testInstanceOne = new TestClassOne()
 
-      expect testInstanceOne.$_$http
+      expect testInstanceOne.$$http
       .toBe $http
 
-      expect testInstanceOne.$_$parse
+      expect testInstanceOne.$$parse
       .toBe $parse
 
       expect testInstanceOne.accept

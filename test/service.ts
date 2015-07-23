@@ -11,8 +11,8 @@ module test {
 
         constructor(
             /* tslint:disable:variable-name */
-            private $_$http: angular.IHttpService,
-            private $_$parse: angular.IParseService
+            private $$http: angular.IHttpService,
+            private $$parse: angular.IParseService
             /* tslint:enable:variable-name */
         ) {}
 

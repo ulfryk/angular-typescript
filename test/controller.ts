@@ -13,7 +13,7 @@ module test {
         constructor(
             $scope: IFirstScope,
             /* tslint:disable:variable-name */
-            private $_$parse: angular.IParseService
+            private $$parse: angular.IParseService
             /* tslint:enable:variable-name */
         ) {
             $scope.name = 'FirstTestCtrl';

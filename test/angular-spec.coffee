@@ -25,16 +25,16 @@ describe 'annotations:', ->
 
     it 'should assign proper $inject array to target.prototype', ->
 
-      expect target1.prototype.$_dep1
+      expect target1.prototype.$$dep1
       .toBe 'dep1'
 
-      expect target1.prototype.$_dep2
+      expect target1.prototype.$$dep2
       .toBe 'dep2'
 
-      expect target2.prototype.$_dep3
+      expect target2.prototype.$$dep3
       .toBe 'dep3'
 
-      expect Object.keys(target3.prototype).filter((key) -> ['$_dep1', '$_dep2', '$_dep3'].indexOf(key) > -1).length
+      expect Object.keys(target3.prototype).filter((key) -> ['$$dep1', '$$dep2', '$$dep3'].indexOf(key) > -1).length
       .toBe 0
 
 

@@ -41,13 +41,13 @@ How ?
 
 ### Service
 
-No one have to:
+Now one have to:
 
 ```typescript
 class SomeService {
 
     constructor() {
-        // do stuff
+        // do stuff $http and $parse
     }
     
     public someMethod(anArg: number): boolean {
@@ -92,7 +92,7 @@ class SomeService {
     }
     
     public someMethod(anArg: number): boolean {
-        // do some stuff with this.$$parse();
+        // do some stuff with this.$$parse
     }
 
 }
@@ -105,7 +105,10 @@ or
 @inject('$http', '$parse')
 class SomeService {
 
-    constructor($http: angular.IHttpService, private $$parse: angular.IParseService) {
+    constructor(
+        $http: angular.IHttpService, 
+        private $$parse: angular.IParseService
+    ) {
         // do stuff with $http and $$parse;
     }
     
@@ -143,7 +146,7 @@ class SomeController {
 
 ### Directive
 
-
+Static class members of directive controller are used as config directive config.
 
 ```typescript
 @directive('ngModuleName', 'atSomeDirective')
@@ -173,6 +176,8 @@ class SomeDirectiveController {
 
 ### ClassFactory
 
+If you use constructors/classes to create common entities a @classFactory can be useful. It passes constructor as angular service and attaches @inject's to it's prototype with leading '$$'.
+
 ```typescript
 @classFactory('test', 'Headers')
 @inject('$http', '$parse')
@@ -180,11 +185,11 @@ class Headers {
 
     public accept: string;
 
-    private $_$http: angular.IHttpService;
-    private $_$parse: angular.IParseService;
+    private $$http: angular.IHttpService;
+    private $$parse: angular.IParseService;
 
     constructor() {
-        this.accept = this.$_$parse('defaults.headers.common.Accept')(this.$_$http);
+        this.accept = this.$$parse('defaults.headers.common.Accept')(this.$$http);
     }
 
 }
@@ -206,6 +211,8 @@ and the somewhere else:
 
 ### Resource
 
+This one is somehow similar to @classFactory, but it also encapsulates magic powers of angular $resource. $resource configs are gathered from static class members (just like in @directive decorator).
+
 ```typescript
 @resource('test', 'UserResource')
 @inject('$http', '$parse')
@@ -216,7 +223,8 @@ class UserResource extends at.Resource {
     public name: string;
     public age: number;
 
-    private $_$parse: angular.IParseService;
+    private $$http: angular.IHttpService;
+    private $$parse: angular.IParseService;
 
     constructor(model?: ITestModel) {
         if (model) {

@@ -34,7 +34,7 @@ describe 'annotations:', ->
 
     it 'should make proper dependencies are passed to service constructor on instantiation', ->
 
-      expect firstTestCtrl.$_$parse
+      expect firstTestCtrl.$$parse
       .toBe $parse
 
       expect $scope.name
