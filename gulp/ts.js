@@ -9,6 +9,7 @@ var tslint = require('gulp-tslint');
 gulp.task('ts-build', function () {
     return gulp.src(['at-*.ts', 'ts/**/*.d.ts', 'test/**/*.ts']).pipe(ts({
         declarationFiles: false,
+        experimentalDecorators: true,
         noExternalResolve: true,
         target: 'ES5',
         typescript: require('typescript')
