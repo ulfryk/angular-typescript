@@ -18,7 +18,7 @@
     "del": "1.2.1",
     "gulp": "3.9.0",
     "gulp-tslint": "3.2.0",
-    "gulp-typescript": "2.8.0",
+    "gulp-typescript": "2.8.1",
     "jasmine-core": "2.3.4",
     "karma": "0.13.9",
     "karma-chrome-launcher": "0.2.0",
