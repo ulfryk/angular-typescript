@@ -15,7 +15,7 @@ Angular-TypeScript
 
 
 
-> TypeScript 1.5 annotations (decorators) for AngularJS 1.x 
+> TypeScript 1.5+ annotations (decorators) for AngularJS 1.x 
 
 What ?
 ------
