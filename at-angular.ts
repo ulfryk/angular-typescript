@@ -9,7 +9,6 @@ module at {
         'controllerAs',
         'bindToController',
         'link',
-        'name',
         'priority',
         'replace',
         'require',
@@ -21,7 +20,7 @@ module at {
         'transclude'
     ];
 
-    /* tslint:disable:no-any no-console */
+    /* tslint:disable:no-any */
     export interface IClassAnnotationDecorator {
         (target: any): void;
         (t: any, key: string, index: number): void;
@@ -78,9 +77,10 @@ module at {
     export function directive(moduleName: string, directiveName: string): at.IClassAnnotationDecorator {
         return (target: any): void => {
             let config: angular.IDirective;
+            const ctrlName: string = angular.isString(target.controller) ? target.controller.split(' ').shift() : null;
             /* istanbul ignore else */
-            if (target.controller) {
-                controller(moduleName, target.controller.split(' ').shift())(target);
+            if (ctrlName) {
+                controller(moduleName, ctrlName)(target);
             }
             config = directiveProperties.reduce((
                 config: angular.IDirective,

@@ -17,25 +17,25 @@ module at {
     export class Resource implements angular.resource.IResource<Resource> {
         public $promise : angular.IPromise<Resource>;
         public $resolved : boolean;
-        public static get(): Resource { return new Resource(); }
-        public static query(): Resource { return new Resource(); }
-        public static remove(): Resource { return new Resource(); }
-        public static save(): Resource { return new Resource(); }
-        public static delete(): Resource { return new Resource(); }
+        public static get(params?: Object): Resource { return new Resource(); }
+        public static query(params?: Object): Resource { return new Resource(); }
+        public static remove(params?: Object): Resource { return new Resource(); }
+        public static save(params?: Object): Resource { return new Resource(); }
+        public static delete(params?: Object): Resource { return new Resource(); }
         constructor(model?: any) { combineResource(this, model); }
-        public $get(): angular.IPromise<Resource> { return this.$promise; }
-        public $query(): angular.IPromise<Resource> { return this.$promise; }
-        public $remove(): angular.IPromise<Resource> { return this.$promise; }
-        public $save(): angular.IPromise<Resource> { return this.$promise; }
-        public $delete(): angular.IPromise<Resource> { return this.$promise; }
+        public $get(params?: Object): angular.IPromise<Resource> { return this.$promise; }
+        public $query(params?: Object): angular.IPromise<Resource> { return this.$promise; }
+        public $remove(params?: Object): angular.IPromise<Resource> { return this.$promise; }
+        public $save(params?: Object): angular.IPromise<Resource> { return this.$promise; }
+        public $delete(params?: Object): angular.IPromise<Resource> { return this.$promise; }
     }
 
     /* istanbul ignore next */
     export class ResourceWithUpdate extends Resource  {
         public $promise : angular.IPromise<ResourceWithUpdate>;
         constructor(model?: any) { super(model); }
-        public static update(): ResourceWithUpdate { return new ResourceWithUpdate(); }
-        public $update(): angular.IPromise<ResourceWithUpdate> { return this.$promise; }
+        public static update(params?: Object): ResourceWithUpdate { return new ResourceWithUpdate(); }
+        public $update(params?: Object): angular.IPromise<ResourceWithUpdate> { return this.$promise; }
     }
 
     export interface IResourceAnnotation {
