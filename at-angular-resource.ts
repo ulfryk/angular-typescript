@@ -24,7 +24,9 @@ module at {
         public static delete(params?: Object): Resource { return new Resource(); }
         constructor(model?: any) { combineResource(this, model); }
         public $get(params?: Object): angular.IPromise<Resource> { return this.$promise; }
-        public $query(params?: Object): angular.IPromise<angular.resource.IResourceArray<Resource>> { return this.$promise; }
+        public $query(params?: Object): angular.IPromise<angular.resource.IResourceArray<Resource>> {
+            return this.$promise;
+        }
         public $remove(params?: Object): angular.IPromise<Resource> { return this.$promise; }
         public $save(params?: Object): angular.IPromise<Resource> { return this.$promise; }
         public $delete(params?: Object): angular.IPromise<Resource> { return this.$promise; }
