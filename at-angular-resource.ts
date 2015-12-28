@@ -27,7 +27,7 @@ module at {
         public $remove: (params?: Object) => angular.IPromise<this>;
         public $save: (params?: Object) => angular.IPromise<this>;
         public $delete: (params?: Object) => angular.IPromise<this>;
-        public $promise: angular.IPromise<Resource>;
+        public $promise: angular.IPromise<this>;
         public $resolved: boolean;
     }
 
@@ -35,8 +35,8 @@ module at {
     export class ResourceWithUpdate extends Resource  {
         constructor(model?: any) { super(model); }
         public static update: () => ResourceWithUpdate;
-        public $update: () => angular.IPromise<ResourceWithUpdate>;
-        public $promise : angular.IPromise<ResourceWithUpdate>;
+        public $update: () => angular.IPromise<this>;
+        public $promise : angular.IPromise<this>;
     }
 
     export interface IResourceAnnotation {
