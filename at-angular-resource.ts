@@ -6,36 +6,37 @@ module at {
 
     /* tslint:disable:no-any */
     type ResourceClass = angular.resource.IResourceClass<any>;
+    type ResourceArray = angular.resource.IResourceArray<any>;
     type ResourceService = angular.resource.IResourceService;
 
     /* istanbul ignore next */
     function combineResource(instance: any, model?: any): void {
-        angular.extend(instance, instance.$_Resource(model));
+        angular.extend(instance, new instance.$_Resource(model));
     }
 
     /* istanbul ignore next */
     export class Resource implements angular.resource.IResource<Resource> {
-        public $promise : angular.IPromise<Resource>;
-        public $resolved : boolean;
-        public static get(params?: Object): Resource { return new Resource(); }
-        public static query(params?: Object): Resource { return new Resource(); }
-        public static remove(params?: Object): Resource { return new Resource(); }
-        public static save(params?: Object): Resource { return new Resource(); }
-        public static delete(params?: Object): Resource { return new Resource(); }
+        public static get: (params?: Object) => Resource;
+        public static query: (params?: Object) => ResourceArray;
+        public static remove: () => Resource;
+        public static save: () => Resource;
+        public static delete: () => Resource;
         constructor(model?: any) { combineResource(this, model); }
-        public $get(params?: Object): angular.IPromise<Resource> { return this.$promise; }
-        public $query(params?: Object): angular.IPromise<Resource> { return this.$promise; }
-        public $remove(params?: Object): angular.IPromise<Resource> { return this.$promise; }
-        public $save(params?: Object): angular.IPromise<Resource> { return this.$promise; }
-        public $delete(params?: Object): angular.IPromise<Resource> { return this.$promise; }
+        public $get: (params?: Object) => angular.IPromise<this>;
+        public $query: (params?: Object) => angular.IPromise<angular.resource.IResourceArray<this>>;
+        public $remove: (params?: Object) => angular.IPromise<this>;
+        public $save: (params?: Object) => angular.IPromise<this>;
+        public $delete: (params?: Object) => angular.IPromise<this>;
+        public $promise: angular.IPromise<Resource>;
+        public $resolved: boolean;
     }
 
     /* istanbul ignore next */
     export class ResourceWithUpdate extends Resource  {
-        public $promise : angular.IPromise<ResourceWithUpdate>;
         constructor(model?: any) { super(model); }
-        public static update(params?: Object): ResourceWithUpdate { return new ResourceWithUpdate(); }
-        public $update(params?: Object): angular.IPromise<ResourceWithUpdate> { return this.$promise; }
+        public static update: () => ResourceWithUpdate;
+        public $update: () => angular.IPromise<ResourceWithUpdate>;
+        public $promise : angular.IPromise<ResourceWithUpdate>;
     }
 
     export interface IResourceAnnotation {
