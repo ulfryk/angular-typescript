@@ -3,22 +3,22 @@
 var gulp = require('gulp');
 
 var config = __dirname + '/karma.conf.js';
-var karma = require('karma').server;
+var Server = require('karma').Server;
 var runSequence = require('run-sequence');
 
 gulp.task('karma-tdd', function (done) {
-    return karma.start({
+    return new Server({
         configFile: config,
         coverageReporter: {
             type : 'html',
             dir : '../.tmp/coverage/'
         },
         browsers: ['Chrome']
-    }, done);
+    }, done).start();
 });
 
 gulp.task('karma-ci', function (done) {
-    karma.start({
+    return new Server({
         configFile: config,
         coverageReporter: {
             type: 'lcov',
@@ -27,20 +27,20 @@ gulp.task('karma-ci', function (done) {
         },
         singleRun: true,
         autoWatch: false
-    }, done);
+    }, done).start();
 });
 
 gulp.task('karma-ci-short', function (done) {
-    karma.start({
+    return new Server({
         configFile: config,
         coverageReporter: {type : 'text-summary'},
         singleRun: true,
         autoWatch: false
-    }, done);
+    }, done).start();
 });
 
 gulp.task('karma-coverage', function (done) {
-    return karma.start({
+    return new Server({
         configFile: config,
         coverageReporter: {
             type : 'html',
@@ -48,7 +48,7 @@ gulp.task('karma-coverage', function (done) {
         },
         singleRun: true,
         autoWatch: false
-    }, done);
+    }, done).start();
 });
 
 

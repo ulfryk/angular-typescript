@@ -29,6 +29,9 @@ module at {
         public $delete: (params?: Object) => angular.IPromise<this>;
         public $promise: angular.IPromise<this>;
         public $resolved: boolean;
+        public toJSON: () => {
+            [index: string]: any;
+        };
     }
 
     /* istanbul ignore next */

@@ -13,7 +13,9 @@ gulp.task('ts-build', function () {
         noExternalResolve: true,
         target: 'ES5',
         typescript: require('typescript')
-    })).js.pipe(gulp.dest('.tmp/'));
+    })).js.on('error', function (e) {
+        throw e;
+    }).pipe(gulp.dest('.tmp/'));
 });
 
 gulp.task('ts-lint', function () {
