@@ -26,9 +26,14 @@ module at {
         (t: any, key: string, index: number): void;
     }
 
-    function instantiate(moduleName: string, name: string, mode: string): IClassAnnotationDecorator {
+    function getFuncName(target):string{
+        return target.name || target.toString().match(/^function\s*([^\s(]+)/)[1]
+    }
+
+    function instantiate(moduleName: string, mode: string, name?: string): IClassAnnotationDecorator {
         return (target: any): void => {
-            angular.module(moduleName)[mode](name, target);
+            let fnName = getFuncName(target);
+            angular.module(moduleName)[mode](name || fnName, target);
         };
     }
 
@@ -58,41 +63,89 @@ module at {
         (moduleName: string, serviceName: string): IClassAnnotationDecorator;
     }
 
-    export function service(moduleName: string, serviceName: string): at.IClassAnnotationDecorator {
-        return instantiate(moduleName, serviceName, 'service');
+    export function service(moduleName: string, serviceName?: string): at.IClassAnnotationDecorator {
+        return instantiate(moduleName, 'service', serviceName);
     }
 
     export interface IControllerAnnotation {
         (moduleName: string, ctrlName: string): IClassAnnotationDecorator;
     }
 
-    export function controller(moduleName: string, ctrlName: string): at.IClassAnnotationDecorator {
-        return instantiate(moduleName, ctrlName, 'controller');
+    export function controller(moduleName: string, ctrlName?: string): at.IClassAnnotationDecorator {
+        return instantiate(moduleName, 'controller', ctrlName);
     }
 
     export interface IDirectiveAnnotation {
         (moduleName: string, directiveName: string): IClassAnnotationDecorator;
     }
 
-    export function directive(moduleName: string, directiveName: string): at.IClassAnnotationDecorator {
+    export interface IDirectiveProperties{
+        selector:string;
+        priority?:number;
+        replace?:boolean;
+        require?:string | string[];
+        restrict?:string;
+        scope?:any;
+        template?:string;
+        templateUrl?:string;
+        terminal?:boolean;
+        transclude?:boolean;
+        controllerAs?:string;
+    }
+
+    export function directive(moduleName: string, directiveSettings:  string|IDirectiveProperties): at.IClassAnnotationDecorator {
+
         return (target: any): void => {
+
             let config: angular.IDirective;
-            const ctrlName: string = angular.isString(target.controller) ? target.controller.split(' ').shift() : null;
+            const ctrlName: string =            angular.isString(target.controller) ? target.controller.split(' ').shift() : null;
+
+
+            if(typeof directiveSettings == 'string'){
+
+                //retrocompatibilty
+
+                config = directiveProperties
+                    .reduce((config: angular.IDirective, property: string) => {
+                        return angular.isDefined(target[property]) ?
+                            angular.extend(config, {[property]: target[property]}) : config;
+                        }, {
+                            controller: target
+                    });
+
+                config.selector = directiveSettings;
+
+            }else{
+
+                //Generate config from Annotation configuration
+
+                config = <angular.IDirective> angular.copy(directiveSettings);
+
+                // store FuncName as ControllerAs
+                config.controllerAs = getFuncName(target);
+                config.controller = target;
+
+                angular.forEach(directiveProperties, function(property){
+                    if(angular.isDefined(target[property])){
+                        config[property] = target[property];
+                    }
+                });
+            }
+
             /* istanbul ignore else */
             if (ctrlName) {
                 controller(moduleName, ctrlName)(target);
             }
-            config = directiveProperties.reduce((
-                config: angular.IDirective,
-                property: string
-            ) => {
-                return angular.isDefined(target[property]) ? angular.extend(config, {[property]: target[property]}) :
-                    config; /* istanbul ignore next */
-            }, {controller: target, scope: Boolean(target.templateUrl)});
 
-            angular.module(moduleName).directive(directiveName, () => (config));
+
+
+
+            angular
+                .module(moduleName)
+                .directive(directiveSettings.selector, () =>(config));
         };
     }
+
 
     export interface IClassFactoryAnnotation {
         (moduleName: string, className: string): IClassAnnotationDecorator;
