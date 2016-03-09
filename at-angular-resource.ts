@@ -14,6 +14,11 @@ module at {
         angular.extend(instance, new instance.$_Resource(model));
     }
 
+    function getFuncName(target: any): string {
+        /* istanbul ignore next */
+        return target.name || target.toString().match(/^function\s*([^\s(]+)/)[1];
+    }
+
     /* istanbul ignore next */
     export class Resource implements angular.resource.IResource<Resource> {
         public static get: (params?: Object) => Resource;
@@ -43,10 +48,10 @@ module at {
     }
 
     export interface IResourceAnnotation {
-        (moduleName: string, className: string): IClassAnnotationDecorator;
+        (moduleName: string, className?: string): IClassAnnotationDecorator;
     }
 
-    export function resource(moduleName: string, className: string): IClassAnnotationDecorator {
+    export function resource(moduleName: string, className?: string): IClassAnnotationDecorator {
         return (target: any): void => {
             function resourceClassFactory($resource: ResourceService, ...args: any[]): any {
                 const newResource: ResourceClass = $resource(target.url, target.params, target.actions, target.options);
@@ -59,7 +64,7 @@ module at {
                 })), ...args);
             }
             resourceClassFactory.$inject = (['$resource']).concat(target.$inject /* istanbul ignore next */ || []);
-            angular.module(moduleName).factory(className, resourceClassFactory);
+            angular.module(moduleName).factory(className || getFuncName(target), resourceClassFactory);
         };
     }
     /* tslint:enable:no-any */

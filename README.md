@@ -23,12 +23,14 @@ What ?
 **angular-typescript** provides annotation like decorators:
 
 ```
-@at.service(moduleName: string, serviceName: string)
+@at.service(moduleName: string, serviceName?: string)
 @at.inject(dependencyOne: string, ...dependencies?: string[])
-@at.controller(moduleName: string, controllerName: string)
+@at.controller(moduleName: string, controllerName?: string)
 @at.directive(moduleName: string, directiveName: string)
-@at.classFactory(moduleName: string, className: string)
-@at.resource(moduleName: string, resourceClassName: string)
+@at.directive(moduleName: string, directiveProperties: at.IDirectiveProperties)
+@at.classFactory(moduleName: string, className?: string)
+@at.resource(moduleName: string, resourceClassName?: string)
+@at.decorator(moduleName: string, serviceBaseName: string)
 ```
 
 Why ?
@@ -62,7 +64,7 @@ angular.module('ngModuleName').service('someService', SomeService);
 Using **angular-typescript** it will look like:
 
 ```typescript
-@service('ngModuleName', 'someService')
+@service('ngModuleName')
 class SomeService {
 
     constructor() {
@@ -74,6 +76,22 @@ class SomeService {
     }
 
 }
+
+// or
+
+@service('ngModuleName','AliasSomeService')
+class SomeService {
+
+    constructor() {
+        // do stuff
+    }
+    
+    public someMethod(anArg: number): boolean {
+        // do some stuff
+    }
+
+}
+
 ```
 
 ***
@@ -123,9 +141,27 @@ class SomeService {
 
 ### Controller
 
-
 ```typescript
-@controller('ngModuleName', 'SomeController')
+@controller('ngModuleName')
+class SomeController {
+
+    constructor(
+        @inject('$scope') $scope: angular.IScope,
+        @inject('$parse') private $$parse: angular.IParseService
+    ) {
+        // do stuff with $scope and $$parse;
+    }
+    
+    public someMethod(anArg: number): boolean {
+        // do some stuff with this.$$parse();
+    }
+
+}
+
+
+//or 
+
+@controller('ngModuleName', 'AliasSomeCtrl')
 class SomeController {
 
     constructor(
@@ -146,7 +182,35 @@ class SomeController {
 
 ### Directive
 
-Static class members of directive controller are used as config directive config.
+You can configure your directive with annotation :
+
+```typescript
+@directive('ngModuleName', {
+    selector:     'atSomeDirective',                //required
+    controllerAs: 'someDirectiveCtrl',              //optional
+    templateUrl:  '/partials/some-directive.html'
+})
+class SomeDirectiveController {
+
+    public static link: angular.IDirectiveLinkFn = (scope, element, attrs, ctrl: SomeDirectiveController) => {
+        ctrl.init(attrs.atSomeDirective);
+    };
+
+    constructor(
+        @inject('$scope') private $$scope: angular.IScope,
+        @inject('$parse') private $$parse: angular.IParseService
+    ) {
+        // do stuff with $$scope and $$parse;
+    }
+    
+    public init(anArg: string): boolean {
+        // do some stuff with this.$$parse and this.$$scope
+    }
+
+}
+```
+
+or with static class members of directive controller are used as config directive config :
 
 ```typescript
 @directive('ngModuleName', 'atSomeDirective')
@@ -242,3 +306,29 @@ class UserResource extends at.Resource {
 
 ***
 
+### Decorator 
+
+Angular provide a decorator feature to extends a service/factory. Use @decorator to use them and adding some others methods :
+
+```typescript
+@decorator('ngModuleName', 'SomeService')
+class SomeServiceDecorator {
+
+    constructor(
+        @at.inject('SomeService') private parent:SomeService;
+    ) {
+        // do stuff
+    }
+    
+    public someMethod2(anArg: number): boolean {
+        // do some stuff
+        
+       console.log(this.parent.someMethod(anArg));
+       
+       // do some stuff
+       return true;
+    }
+
+}
+
+```

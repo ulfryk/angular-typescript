@@ -18,4 +18,7 @@ module test {
 
     }
 
+    @service('test')
+    export class TestServiceFour {}
+
 }

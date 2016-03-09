@@ -19,4 +19,7 @@ module test {
 
     }
 
+    @classFactory('test')
+    export class TestClassSecond {}
+
 }
