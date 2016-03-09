@@ -148,6 +148,10 @@ module at {
         };
     }
 
+    export interface IDecoratorAnnotation {
+        (moduleName: string, targetProvider: string): IClassAnnotationDecorator;
+    }
+
     export function decorator(moduleName: string, targetProvider: string): at.IClassAnnotationDecorator {
 
         return (targetClass: any): void => {
@@ -158,22 +162,21 @@ module at {
                     '$provide',
                     function($provide: angular.auto.IProvideService): void {
 
-                        let indexDelegate: number = targetClass.$inject.indexOf('$delegate');
-                        delegation.$inject = targetClass.slide();
+                        delegation.$inject = ['$delegate', '$injector'];
 
-                        if (indexDelegate === -1) {
-                            indexDelegate = delegation.$inject.push('$delegate') - 1;
-                        }
+                        function delegation(
+                            $delegate: angular.ISCEDelegateProvider,
+                            $injector: angular.auto.IInjectorService
+                        ): any {
 
-                        function delegation(...injects: string[]): any {
+                            let instance: any = $injector.instantiate(targetClass, {
+                                $delegate: $delegate
+                            });
 
-                            let $delegate: any = injects[indexDelegate];
-
-                            return angular.extend($delegate, targetClass.prototype, new targetClass(...injects));
+                            return angular.extend($delegate, targetClass.prototype, instance);
                         }
 
                         $provide.decorator(targetProvider, delegation);
-
                     }]);
 
         };
