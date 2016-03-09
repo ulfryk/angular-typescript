@@ -76,7 +76,7 @@ module at {
     }
 
     export interface IDirectiveAnnotation {
-        (moduleName: string, directiveName: string): IClassAnnotationDecorator;
+        (moduleName: string, directiveName: string | IDirectiveProperties): IClassAnnotationDecorator;
     }
 
     export interface IDirectiveProperties extends angular.IDirective {
@@ -85,51 +85,43 @@ module at {
 
     export function directive(
         moduleName: string,
-        directiveSettings:  string|IDirectiveProperties
+        directiveSettings:  string | IDirectiveProperties
     ): at.IClassAnnotationDecorator {
 
         return (target: any): void => {
 
             let config: IDirectiveProperties;
+
             const ctrlName: string = angular.isString(target.controller)
                 ? target.controller.split(' ').shift()
                 : null;
 
-            if (typeof directiveSettings === 'string') {
+            let controllerAs: string;
 
-                // Retrocompatibilty
-
-                config = directiveProperties
-                    .reduce((config: angular.IDirective, property: string) => {
-                        return angular.isDefined(target[property]) ?
-                            angular.extend(config, {[property]: target[property]}) : config;
-                        }, {
-                            controller: target
-                    });
-
-                config.selector = directiveSettings;
-
-            } else {
-
-                // Generate config from Annotation configuration
-
-                config = <IDirectiveProperties> angular.copy(directiveSettings);
-
-                // Store FuncName as ControllerAs
-                config.controllerAs = getFuncName(target);
-                config.controller = target;
-
-                angular.forEach(directiveProperties, function(property: string): any {
-                    if (angular.isDefined(target[property])) {
-                        config[property] = target[property];
-                    }
-                });
-            }
-
-            /* istanbul ignore else */
             if (ctrlName) {
                 controller(moduleName, ctrlName)(target);
             }
+            // Retrocompatibilty
+
+            /* istanbul ignore else */
+            if (typeof directiveSettings === 'string') {
+                directiveSettings = <IDirectiveProperties> {
+                    selector: <string> directiveSettings
+                };
+            } else {
+                controllerAs = (<IDirectiveProperties> directiveSettings).controllerAs || getFuncName(target);
+            }
+
+            config = directiveProperties.reduce((config: angular.IDirective, property: string) => {
+                return angular.isDefined(target[property])
+                    ? angular.extend(config, {[property]: target[property]})
+                    : config;
+            }, angular.extend({}, directiveSettings, {
+                controllerAs:   controllerAs,
+                controller:     target
+            }));
+
+            /* istanbul ignore else */
 
             angular
                 .module(moduleName)
@@ -165,19 +157,23 @@ module at {
                     '$provide',
                     function($provide: angular.auto.IProvideService): void {
 
-                    $provide.decorator(targetProvider, [
-                       '$delegate',
-                        ($delegate: any): void => {
+                        let indexDelegate: number = targetClass.$inject.indexOf('$delegate');
+                        delegation.$inject = targetClass.slide();
 
-                            $delegate[targetProvider] = $delegate;
-
-                            angular.extend($delegate, new targetClass());
-
-                            return $delegate;
+                        if (indexDelegate === -1) {
+                            indexDelegate = delegation.$inject.push('$delegate') - 1;
                         }
-                    ]);
 
-                }]);
+                        function delegation(...injects: string[]): any {
+
+                            let $delegate: any = injects[indexDelegate];
+
+                            return angular.extend($delegate, targetClass.prototype, new targetClass(...injects));
+                        }
+
+                        $provide.decorator(targetProvider, delegation);
+
+                    }]);
 
         };
 
