@@ -69,3 +69,13 @@ describe 'annotations:', ->
       .toBe 'application/json, text/plain, */* :: THE NAME :: 1001.1'
 
 
+  describe '@resource (without Resource name)', ->
+    TestResourceTwo = null
+
+    beforeEach inject (_TestResourceTwo_) ->
+      TestResourceTwo = _TestResourceTwo_
+
+    it 'should prepare decorated resource class as new service', ->
+
+      expect TestResourceTwo
+      .toBeDefined()

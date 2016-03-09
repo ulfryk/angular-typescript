@@ -38,4 +38,7 @@ module test {
 
     }
 
+    @resource('test')
+    export class TestResourceTwo {}
+
 }

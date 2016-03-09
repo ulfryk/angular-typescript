@@ -21,4 +21,19 @@ module test {
 
     }
 
+    @controller('test')
+    @inject('$scope', '$parse')
+    export class SecondTestCtrl {
+
+        constructor(
+            $scope: IFirstScope,
+            /* tslint:disable:variable-name */
+            private $$parse: angular.IParseService
+            /* tslint:enable:variable-name */
+        ) {
+            $scope.name = 'SecondTestCtrl';
+        }
+
+    }
+
 }

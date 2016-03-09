@@ -27,6 +27,7 @@ module at {
     }
 
     function getFuncName(target: any): string {
+        /* istanbul ignore next */
         return target.name || target.toString().match(/^function\s*([^\s(]+)/)[1];
     }
 
@@ -60,7 +61,7 @@ module at {
     }
 
     export interface IServiceAnnotation {
-        (moduleName: string, serviceName: string): IClassAnnotationDecorator;
+        (moduleName: string, serviceName?: string): IClassAnnotationDecorator;
     }
 
     export function service(moduleName: string, serviceName?: string): at.IClassAnnotationDecorator {
@@ -68,7 +69,7 @@ module at {
     }
 
     export interface IControllerAnnotation {
-        (moduleName: string, ctrlName: string): IClassAnnotationDecorator;
+        (moduleName: string, ctrlName?: string): IClassAnnotationDecorator;
     }
 
     export function controller(moduleName: string, ctrlName?: string): at.IClassAnnotationDecorator {
@@ -103,7 +104,6 @@ module at {
             }
             // Retrocompatibilty
 
-            /* istanbul ignore else */
             if (typeof directiveSettings === 'string') {
                 directiveSettings = <IDirectiveProperties> {
                     selector: <string> directiveSettings
@@ -115,7 +115,8 @@ module at {
             config = directiveProperties.reduce((config: angular.IDirective, property: string) => {
                 return angular.isDefined(target[property])
                     ? angular.extend(config, {[property]: target[property]})
-                    : config;
+                    : config; /* istanbul ignore next */
+
             }, angular.extend({}, directiveSettings, {
                 controllerAs:   controllerAs,
                 controller:     target
@@ -130,7 +131,7 @@ module at {
     }
 
     export interface IClassFactoryAnnotation {
-        (moduleName: string, className: string): IClassAnnotationDecorator;
+        (moduleName: string, className?: string): IClassAnnotationDecorator;
     }
 
     export function classFactory(moduleName: string, className?: string): at.IClassAnnotationDecorator {

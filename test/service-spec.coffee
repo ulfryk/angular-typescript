@@ -34,3 +34,21 @@ describe 'annotations:', ->
         .toBe deps[dep]
 
 
+  describe '@service without Service name', ->
+    testServiceFour = null
+
+    beforeEach inject (_TestServiceFour_) ->
+      testServiceFour = _TestServiceFour_
+
+    it 'should be defined', ->
+
+      expect at.service
+      .toEqual jasmine.any Function
+
+    it 'should instantiate decorated class as new service', ->
+
+      expect testServiceFour
+      .toBeDefined()
+
+      expect testServiceFour
+      .toEqual jasmine.any test.TestServiceFour

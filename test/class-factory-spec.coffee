@@ -49,4 +49,17 @@ describe 'annotations:', ->
       expect testInstanceOne.accept
       .toBe 'application/json, text/plain, */*'
 
+  describe '@classFactory (without Factory name)', ->
+    TestClassSecond = null
+
+    beforeEach inject (_TestClassSecond_) ->
+      TestClassSecond = _TestClassSecond_
+
+    it 'should create class as a service', ->
+
+      expect TestClassSecond
+      .toBeDefined()
+
+      expect TestClassSecond
+      .toBe test.TestClassSecond
 
