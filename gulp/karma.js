@@ -33,7 +33,7 @@ gulp.task('karma-ci', function (done) {
 gulp.task('karma-ci-short', function (done) {
     return new Server({
         configFile: config,
-        coverageReporter: {type : 'text-summary'},
+        coverageReporter: {type : 'text'},
         singleRun: true,
         autoWatch: false
     }, done).start();

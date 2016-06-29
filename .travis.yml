@@ -3,10 +3,6 @@ node_js:
   - "0.10"
 install:
   - npm install
-before_script:
-  - npm install -g gulp
-  - npm install -g bower
-  - bower install
 script:
-  - gulp ci
-  - cat ./coverage/lcov/lcov.info  | ./node_modules/coveralls/bin/coveralls.js
+  - npm test
+  - cat ./coverage/lcov/lcov.info | ./node_modules/coveralls/bin/coveralls.js

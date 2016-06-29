@@ -9,16 +9,12 @@ require('require-dir')('./gulp/');
  * emulate ci locally
  */
 gulp.task('default', function (done) {
-    runSequence('ts-lint', 'ts-build', 'karma-ci-short', done);
+    runSequence('ts', 'karma-ci-short', done);
 });
 
 /*
  * ci
  */
 gulp.task('ci', function (done) {
-    runSequence(
-        'ts',
-        'karma-ci',
-        done
-    );
+    runSequence('ts', 'karma-ci', done);
 });

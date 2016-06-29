@@ -21,7 +21,6 @@ module at {
         public static remove: () => Resource;
         public static save: () => Resource;
         public static delete: () => Resource;
-        constructor(model?: any) { combineResource(this, model); }
         public $get: (params?: Object) => angular.IPromise<this>;
         public $query: (params?: Object) => angular.IPromise<angular.resource.IResourceArray<this>>;
         public $remove: (params?: Object) => angular.IPromise<this>;
@@ -32,14 +31,15 @@ module at {
         public toJSON: () => {
             [index: string]: any;
         };
+        constructor(model?: any) { combineResource(this, model); }
     }
 
     /* istanbul ignore next */
     export class ResourceWithUpdate extends Resource  {
-        constructor(model?: any) { super(model); }
         public static update: () => ResourceWithUpdate;
         public $update: () => angular.IPromise<this>;
         public $promise : angular.IPromise<this>;
+        constructor(model?: any) { super(model); }
     }
 
     export interface IResourceAnnotation {

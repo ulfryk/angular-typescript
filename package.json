@@ -1,10 +1,18 @@
 {
   "name": "angular-typescript",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "TypeScript 1.5+ annotations (decorators) for AngularJS 1.x",
   "repository": {
     "type": "git",
     "url": "git://github.com/ulfryk/angular-typescript.git"
+  },
+  "scripts": {
+    "postinstall": "bower install",
+    "build": "gulp ts",
+    "karma": "gulp karma-ci-short",
+    "test": "gulp ci",
+    "tdd": "gulp karma-tdd",
+    "coverage": "gulp karma-coverage"
   },
   "keywords": [
     "TypeScript",
@@ -14,23 +22,25 @@
   "license": "WTFPL",
   "dependencies": {},
   "devDependencies": {
-    "coveralls": "2.11.6",
-    "del": "2.2.0",
-    "gulp": "3.9.0",
-    "gulp-tslint": "4.2.2",
-    "gulp-typescript": "2.10.0",
+    "bower": "1.7.9",
+    "coveralls": "2.11.9",
+    "del": "2.2.1",
+    "gulp": "3.9.1",
+    "gulp-tslint": "5.0.0",
+    "gulp-typescript": "2.13.6",
     "jasmine-core": "2.4.1",
-    "karma": "0.13.16",
-    "karma-chrome-launcher": "0.2.2",
-    "karma-coffee-preprocessor": "0.3.0",
-    "karma-coverage": "0.5.3",
-    "karma-jasmine": "0.3.6",
-    "karma-phantomjs-launcher": "0.2.2",
+    "karma": "1.1.0",
+    "karma-chrome-launcher": "1.0.1",
+    "karma-coffee-preprocessor": "1.0.0",
+    "karma-coverage": "1.0.0",
+    "karma-jasmine": "1.0.2",
+    "karma-mocha-reporter": "2.0.4",
+    "karma-phantomjs2-launcher": "0.5.0",
     "merge-stream": "1.0.0",
-    "phantomjs": "1.9.19",
+    "phantomjs2": "2.2.0",
     "require-dir": "0.3.0",
-    "run-sequence": "1.1.5",
-    "tslint": "3.2.1",
-    "typescript": "1.7.5"
+    "run-sequence": "1.2.1",
+    "tslint": "3.12.1",
+    "typescript": "1.8.10"
   }
 }

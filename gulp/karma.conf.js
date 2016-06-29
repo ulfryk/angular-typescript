@@ -12,19 +12,20 @@ module.exports = function (config) {
             '../test/*.coffee'
         ],
         exclude: [],
-        reporters: ['dots', 'coverage'],
+        reporters: ['mocha', 'coverage'],
         port: 9876,
         runnerPort: 9100,
         colors: true,
         logLevel: config.LOG_WARN,
         autoWatch: true,
-        browsers: ['PhantomJS'],
+        browsers: ['PhantomJS2'],
         plugins: [
             'karma-jasmine',
             'karma-coffee-preprocessor',
             'karma-coverage',
             'karma-chrome-launcher',
-            'karma-phantomjs-launcher'
+            'karma-mocha-reporter',
+            'karma-phantomjs2-launcher'
         ],
         preprocessors: {
             '../.tmp/at-*.js': ['coverage'],
