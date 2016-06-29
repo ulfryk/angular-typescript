@@ -12,7 +12,7 @@ module.exports = function (config) {
             '../test/*.coffee'
         ],
         exclude: [],
-        reporters: ['dots', 'coverage'],
+        reporters: ['mocha', 'coverage'],
         port: 9876,
         runnerPort: 9100,
         colors: true,
@@ -24,6 +24,7 @@ module.exports = function (config) {
             'karma-coffee-preprocessor',
             'karma-coverage',
             'karma-chrome-launcher',
+            'karma-mocha-reporter',
             'karma-phantomjs-launcher'
         ],
         preprocessors: {

@@ -12,6 +12,8 @@ module test {
         // Static fields hold directive configuration
         public static controller: string = 'TestComponentCtrl as ctrl';
 
+        public static restrict: string = 'E';
+
         public static link: angular.IDirectiveLinkFn = (
             scope: IFirstComponentScope,
             element: angular.IAugmentedJQuery,
@@ -21,15 +23,15 @@ module test {
             ctrl.setCtrlName('FAKE_CTRL_NAME');
         };
 
-        public static restrict: string = 'E';
-
         public static template: angular.IDirectiveCompileFn = (tElement: angular.IAugmentedJQuery) => {
             tElement.addClass('test-component');
             return '<span>{{ name }}</span><span>{{ ctrl.name }}</span>';
         };
 
         // And the rest are simple Ctrl instance members
+        /* tslint:disable:member-ordering */
         public name: string;
+        /* tslint:enable:member-ordering */
 
         constructor(
             @inject('$scope') $scope: IFirstComponentScope,

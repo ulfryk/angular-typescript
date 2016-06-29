@@ -24,10 +24,7 @@
     "AngularJS"
   ],
   "license": "WTFPL",
-  "main": [
-    "at-angular.ts",
-    "at-angular-resource.ts"
-  ],
+  "main": "at-angular.ts",
   "repository": {
     "type": "git",
     "url": "git://github.com/ulfryk/angular-typescript.git"
