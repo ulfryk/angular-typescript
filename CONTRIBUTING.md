@@ -5,6 +5,6 @@ After cloning git repo run (from project root):
 
 ```
 npm install
-bower install
-gulp
+npm run build
+npm run karma
 ```

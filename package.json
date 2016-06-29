@@ -9,8 +9,8 @@
   "scripts": {
     "postinstall": "bower install",
     "build": "gulp ts",
-    "test": "gulp",
-    "karma": "gulp karma-ci"
+    "karma": "gulp karma-ci-short",
+    "test": "gulp ci"
   },
   "keywords": [
     "TypeScript",
