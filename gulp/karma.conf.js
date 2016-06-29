@@ -18,14 +18,14 @@ module.exports = function (config) {
         colors: true,
         logLevel: config.LOG_WARN,
         autoWatch: true,
-        browsers: ['PhantomJS'],
+        browsers: ['PhantomJS2'],
         plugins: [
             'karma-jasmine',
             'karma-coffee-preprocessor',
             'karma-coverage',
             'karma-chrome-launcher',
             'karma-mocha-reporter',
-            'karma-phantomjs-launcher'
+            'karma-phantomjs2-launcher'
         ],
         preprocessors: {
             '../.tmp/at-*.js': ['coverage'],

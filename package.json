@@ -1,6 +1,6 @@
 {
   "name": "angular-typescript",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "TypeScript 1.5+ annotations (decorators) for AngularJS 1.x",
   "repository": {
     "type": "git",
@@ -10,7 +10,9 @@
     "postinstall": "bower install",
     "build": "gulp ts",
     "karma": "gulp karma-ci-short",
-    "test": "gulp ci"
+    "test": "gulp ci",
+    "tdd": "gulp karma-tdd",
+    "coverage": "gulp karma-coverage"
   },
   "keywords": [
     "TypeScript",
@@ -33,9 +35,9 @@
     "karma-coverage": "1.0.0",
     "karma-jasmine": "1.0.2",
     "karma-mocha-reporter": "2.0.4",
-    "karma-phantomjs-launcher": "1.0.1",
+    "karma-phantomjs2-launcher": "0.5.0",
     "merge-stream": "1.0.0",
-    "phantomjs-prebuilt": "2.1.7",
+    "phantomjs2": "2.2.0",
     "require-dir": "0.3.0",
     "run-sequence": "1.2.1",
     "tslint": "3.12.1",

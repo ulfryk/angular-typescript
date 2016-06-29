@@ -5,4 +5,4 @@ install:
   - npm install
 script:
   - npm test
-  - cat ./coverage/lcov/lcov.info  | ./node_modules/coveralls/bin/coveralls.js
+  - cat ./coverage/lcov/lcov.info | ./node_modules/coveralls/bin/coveralls.js
