@@ -28,9 +28,8 @@ module at {
         public $delete: (params?: Object) => angular.IPromise<this>;
         public $promise: angular.IPromise<this>;
         public $resolved: boolean;
-        public toJSON: () => {
-            [index: string]: any;
-        };
+        public $cancelRequest: () => void;
+        public toJSON: () => this;
         constructor(model?: any) { combineResource(this, model); }
     }
 
