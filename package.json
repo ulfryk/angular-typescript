@@ -7,7 +7,7 @@
     "url": "git://github.com/ulfryk/angular-typescript.git"
   },
   "scripts": {
-    "postinstall": "bower install",
+    "postinstall": "bower install && typings install",
     "build": "gulp ts",
     "karma": "gulp karma-ci-short",
     "test": "gulp ci",
@@ -41,6 +41,7 @@
     "require-dir": "0.3.0",
     "run-sequence": "1.2.1",
     "tslint": "3.12.1",
-    "typescript": "1.8.10"
+    "typescript": "1.8.10",
+    "typings": "^1.3.1"
   }
 }
