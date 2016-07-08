@@ -9,6 +9,7 @@
   "scripts": {
     "build": "gulp ts",
     "karma": "gulp karma-ci-short",
+    "postinstall": "typings install",
     "test": "gulp ci",
     "tdd": "gulp karma-tdd",
     "coverage": "gulp karma-coverage"
@@ -48,6 +49,7 @@
     "merge-stream": "^1.0.0",
     "require-dir": "^0.3.0",
     "tslint": "^3.12.1",
-    "typescript": "^1.8.10"
+    "typescript": "^1.8.10",
+    "typings": "^1.3.1"
   }
 }
