@@ -3,6 +3,9 @@
 module at {
 
     'use strict';
+    import IPromise = angular.IPromise;
+    import IResourceArray = angular.resource.IResourceArray;
+    import IResource = angular.resource.IResource;
 
     /* tslint:disable:no-any */
     type ResourceClass = angular.resource.IResourceClass<any>;
@@ -15,29 +18,29 @@ module at {
     }
 
     /* istanbul ignore next */
-    export class Resource implements angular.resource.IResource<Resource> {
-        public static get: (params?: Object) => Resource;
-        public static query: (params?: Object) => ResourceArray;
-        public static remove: () => Resource;
-        public static save: () => Resource;
-        public static delete: () => Resource;
-        public $get: (params?: Object) => angular.IPromise<this>;
-        public $query: (params?: Object) => angular.IPromise<angular.resource.IResourceArray<this>>;
-        public $remove: (params?: Object) => angular.IPromise<this>;
-        public $save: (params?: Object) => angular.IPromise<this>;
-        public $delete: (params?: Object) => angular.IPromise<this>;
-        public $promise: angular.IPromise<this>;
-        public $resolved: boolean;
-        public $cancelRequest: () => void;
-        public toJSON: () => this;
+    export class Resource implements IResource<Resource> {
+        static get: (params?: Object) => Resource;
+        static query: (params?: Object) => ResourceArray;
+        static remove: () => Resource;
+        static save: () => Resource;
+        static delete: () => Resource;
+        $get: (params?: Object) => IPromise<this>;
+        $query: (params?: Object) => IPromise<IResourceArray<this>>;
+        $remove: (params?: Object) => IPromise<this>;
+        $save: (params?: Object) => IPromise<this>;
+        $delete: (params?: Object) => IPromise<this>;
+        $promise: IPromise<this>;
+        $resolved: boolean;
+        $cancelRequest: () => void;
+        toJSON: () => this;
         constructor(model?: any) { combineResource(this, model); }
     }
 
     /* istanbul ignore next */
     export class ResourceWithUpdate extends Resource  {
-        public static update: () => ResourceWithUpdate;
-        public $update: () => angular.IPromise<this>;
-        public $promise : angular.IPromise<this>;
+        static update: () => ResourceWithUpdate;
+        $update: () => IPromise<this>;
+        $promise : IPromise<this>;
         constructor(model?: any) { super(model); }
     }
 
