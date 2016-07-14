@@ -2,13 +2,15 @@ module.exports = function (config) {
     config.set({
         basePath: '',
         files: [
-            '../bower_components/angular/angular.js',
-            '../.tmp/at-angular.js',
-            '../bower_components/angular-resource/angular-resource.js',
-            '../.tmp/at-angular-resource.js',
-            '../bower_components/angular-mocks/angular-mocks.js',
-            '../.tmp/module.js',
-            '../.tmp/*.js',
+            '../node_modules/angular/angular.js',
+            '../node_modules/angular-resource/angular-resource.js',
+            '../node_modules/angular-mocks/angular-mocks.js',
+            '../node_modules/ts-helpers/index.js',
+            '../at-angular.js',
+            '../at-angular-resource.js',
+            '../test/module.js',
+            '../test/*.js',
+            {pattern: '../test/*.ts', included: false},
             '../test/*.coffee'
         ],
         exclude: [],
@@ -28,7 +30,7 @@ module.exports = function (config) {
             'karma-phantomjs2-launcher'
         ],
         preprocessors: {
-            '../.tmp/at-*.js': ['coverage'],
+            '../dist/at-*.js': ['coverage'],
             '../test/*.coffee': ['coffee']
         },
         captureTimeout: 60000,

@@ -1,4 +1,6 @@
 {
+  "name": "angular-typescript",
+  "dependencies": {},
   "globalDependencies": {
     "angular": "registry:dt/angular#1.5.0+20160627105203",
     "angular-resource": "registry:dt/angular-resource#1.5.0+20160613142217",

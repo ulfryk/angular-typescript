@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "module": "umd",
+    "target": "es5",
+    "declaration": false,
+    "experimentalDecorators": true,
+    "sourceMap": true,
+    "noEmitOnError": true,
+    "noEmitHelpers": true
+  },
+  "compileOnSave": true
+}
