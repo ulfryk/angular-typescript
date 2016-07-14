@@ -22,7 +22,8 @@
   "license": "WTFPL",
   "dependencies": {
     "angular": "^1.5.7",
-    "angular-resource": "^1.5.7"
+    "angular-resource": "^1.5.7",
+    "ts-helpers": "^1.1.1"
   },
   "devDependencies": {
     "angular-mocks": "^1.5.7",
@@ -34,7 +35,7 @@
     "graceful-fs": "^4.1.4",
     "gulp": "^3.9.1",
     "gulp-sequence": "^0.4.5",
-    "gulp-tsc": "^1.2.0",
+    "gulp-sourcemaps": "^2.0.0-alpha",
     "gulp-tslint": "^5.0.0",
     "gulp-typescript": "^2.13.6",
     "jasmine-core": "^2.4.1",

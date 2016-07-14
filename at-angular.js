@@ -92,4 +92,5 @@ var at;
     }
     at.classFactory = classFactory;
 })(at || (at = {}));
+
 //# sourceMappingURL=at-angular.js.map

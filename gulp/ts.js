@@ -2,27 +2,31 @@
 
 import gulp from 'gulp';
 
-import sequence from 'gulp-sequence';
-import tsc from 'gulp-tsc';
+import ts from 'gulp-typescript';
 import tslint from 'gulp-tslint';
+import sourceMaps from 'gulp-sourcemaps';
+
+var tsProject = ts.createProject('tsconfig.json');
 
 gulp.task('ts-build', function () {
-  return gulp.src(['at-*.ts', 'test/**/*.ts', 'typings/**/*.d.ts'])
-    .pipe(tsc({
-      declarationFiles: false,
-      experimentalDecorators: true,
-      noExternalResolve: true,
-      target: 'ES5',
-      module: 'umd',
-      sourceMap: true,
-      emitError: false
+  return gulp.src(['**/*.ts', 'typings/**/*.d.ts', '!node_modules/**/*.ts'])
+    .pipe(sourceMaps.init())
+    .pipe(ts(tsProject))
+    .pipe(sourceMaps.write('', {
+      sourceRoot: ' ',
+      mapSources: (destPath) => '../' + destPath
     }))
-    .pipe(gulp.dest('dist/'));
-});
-gulp.task('ts-lint', function () {
-  return gulp.src(['at-*.ts', 'test/**/*.ts'])
-    .pipe(tslint({configuration: {rules: require('../tslint.json')}}))
-    .pipe(tslint.report('verbose'));
+    .pipe(gulp.dest(''));
 });
 
-gulp.task('ts', sequence(['ts-lint', 'ts-build']));
+gulp.task('ts-lint', function () {
+  return gulp.src(['src/**/*.ts', 'test/**/*.ts'])
+    .pipe(tslint({configuration: 'tslint.json'}))
+    .pipe(tslint.report({emitError: false}));
+});
+
+gulp.task('ts', ['ts-lint', 'ts-build']);
+
+gulp.task('watch', ['ts'], function() {
+  gulp.watch(['src/**/*.ts', 'test/**/*.ts'], ['ts']);
+});

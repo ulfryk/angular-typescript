@@ -1,6 +1,6 @@
-import gulp from "gulp";
 'use strict';
 
+import gulp from "gulp";
 import sequence from 'gulp-sequence';
 
 require('require-dir')('./gulp/');

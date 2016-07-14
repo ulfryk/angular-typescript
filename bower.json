@@ -3,7 +3,8 @@
   "version": "0.0.10",
   "dependencies": {
     "angular": "^1.5.7",
-    "angular-resource": "^1.5.7"
+    "angular-resource": "^1.5.7",
+    "ts-helpers": "^1.1.1"
   },
   "devDependencies": {
     "angular-mocks": "^1.2.0"

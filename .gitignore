@@ -19,3 +19,5 @@ bower_components/
 /typings/
 /dist/test/
 typings/
+/test/**/*.js
+/test/**/*.js.map
