@@ -1,21 +1,12 @@
-/* istanbul ignore if else */
+import {Service} from '../src/at-angular';
 
-module test {
+@Service()
+export class TestServiceTwo {
 
-    'use strict';
+  static $inject: string[] = ['$http', '$parse'];
 
-    @service('test', 'testServiceTwo')
-    export class TestServiceTwo {
-
-        public static $inject: string[] = ['$http', '$parse'];
-
-        constructor(
-            /* tslint:disable:variable-name */
-            private $$http: angular.IHttpService,
-            private $$parse: angular.IParseService
-            /* tslint:enable:variable-name */
-        ) {}
-
-    }
+  constructor(private $http: angular.IHttpService,
+              private $parse: angular.IParseService) {
+  }
 
 }

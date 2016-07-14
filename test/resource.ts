@@ -1,41 +1,37 @@
-/* istanbul ignore next */
+import {Resource, BaseResource} from '../src/at-angular-resource';
+import {Inject} from '../src/at-angular';
+import IHttpService = angular.IHttpService;
+import IParseService = angular.IParseService;
 
-module test {
+interface IUser {
+  name: string;
+  age: number;
+}
 
-    'use strict';
+@Resource()
+@Inject('$http', '$parse')
+export class UserResource extends BaseResource implements IUser {
+  // And to keep proper type, you may add "extends at.Resource"
 
-    interface ITestModel {
-        name: string;
-        age: number;
+  static url: string = '/fake/url';
+
+  name: string;
+  age: number;
+
+  private $http: IHttpService;
+  private $parse: IParseService;
+
+  constructor(model?: IUser) {
+    super(model);
+    /* istanbul ignore else */
+    if (model) {
+      this.name = model.name;
+      this.age = model.age;
     }
+  }
 
-    @resource('test', 'TestResourceOne')
-    @inject('$http', '$parse')
-    export class TestResourceOne implements ITestModel {
-        // And to keep proper type, you may add "extends at.Resource"
-
-        public static url: string = '/fake/url';
-
-        public name: string;
-        public age: number;
-
-        /* tslint:disable:variable-name */
-        private $$http: angular.IHttpService;
-        private $$parse: angular.IParseService;
-        /* tslint:enable:variable-name */
-
-        constructor(model?: ITestModel) {
-            /* istanbul ignore else */
-            if (model) {
-                this.name = model.name;
-                this.age = model.age;
-            }
-        }
-
-        public getLabel(): string {
-            return this.$$parse('defaults.headers.common.Accept')(this.$$http) + this.name + String(this.age);
-        }
-
-    }
+  getLabel(): string {
+    return this.$parse('defaults.headers.common.Accept')(this.$http) + this.name + String(this.age);
+  }
 
 }

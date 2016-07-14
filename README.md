@@ -15,7 +15,7 @@ Angular-TypeScript
 
 
 
-> TypeScript 1.7+ annotations (decorators) for AngularJS 1.x 
+> TypeScript 1.8+ annotations (decorators) for AngularJS 1.5.x 
 
 What ?
 ------
@@ -23,12 +23,13 @@ What ?
 **angular-typescript** provides annotation like decorators:
 
 ```
-@at.service(moduleName: string, serviceName: string)
-@at.inject(dependencyOne: string, ...dependencies?: string[])
-@at.controller(moduleName: string, controllerName: string)
-@at.directive(moduleName: string, directiveName: string)
-@at.classFactory(moduleName: string, className: string)
-@at.resource(moduleName: string, resourceClassName: string)
+@Service()
+@Inject(dependencyOne: string, ...dependencies?: string[])
+@Controller()
+@Directive(config: IDirectiveConfig)
+@Factory()
+@Resource()
+@Component(config: IComponentConfig) 
 ```
 
 Why ?
@@ -41,10 +42,12 @@ How ?
 
 ### Service
 
-Now one have to:
+Without annotations we have to:
 
 ```typescript
-class SomeService {
+//# some.service.ts
+
+export class SomeService {
 
     constructor() {
         // do stuff $http and $parse
@@ -55,15 +58,23 @@ class SomeService {
     }
 
 }
+```
 
-angular.module('ngModuleName').service('someService', SomeService);
+and in the main module:
+
+```typescript
+//# some.module.ts
+
+import {SomeService} from 'some.service.ts';
+
+export someModule = angular.module('someModule', []).service('someService', SomeService);
 ```
 
 Using **angular-typescript** it will look like:
 
 ```typescript
-@service('ngModuleName', 'someService')
-class SomeService {
+@Service()
+export class SomeService {
 
     constructor() {
         // do stuff
@@ -76,23 +87,66 @@ class SomeService {
 }
 ```
 
+and in the main module:
+
+```typescript
+//# some.module.ts
+
+import {SomeService} from 'some.service.ts';
+
+export someModule = autoDeclare('someModule', [], [SomeService]);
+```
+
 ***
 
 ### Inject
 
+Without annotations we have to:
+
 ```typescript
-@service('ngModuleName', 'someServiceName')
-class SomeService {
+export class SomeService {
+    // this line is error prome doubt to we should keep the same order as in the constructor
+    static $inject = ['$http', '$parse'];
 
     constructor(
-        @inject('$http') $http: angular.IHttpService,
-        @inject('$parse') private $$parse: angular.IParseService
+        private $http: angular.IHttpService,
+        private $parse: angular.IParseService
     ) {
-        // do stuff with $http and $$parse;
+        // do stuff with $http and $parse;
     }
     
     public someMethod(anArg: number): boolean {
-        // do some stuff with this.$$parse
+        // do some stuff with this.$parse
+    }
+
+}
+```
+
+and in the main module:
+
+```typescript
+//# some.module.ts
+
+import {SomeService} from 'some.service.ts';
+
+export someModule = angular.module('someModule', []).service('someService', SomeService);
+```
+
+Using **angular-typescript** it will look like:
+
+```typescript
+@Service()
+export class SomeService {
+
+    constructor(
+        @Inject('$http') $http: angular.IHttpService,
+        @Inject('$parse') private $parse: angular.IParseService
+    ) {
+        // do stuff with $http and $parse;
+    }
+    
+    public someMethod(anArg: number): boolean {
+        // do some stuff with this.$parse
     }
 
 }
@@ -101,36 +155,51 @@ class SomeService {
 or
 
 ```typescript
-@service('ngModuleName', 'someServiceName')
-@inject('$http', '$parse')
-class SomeService {
+@Service()
+@Inject('$http', '$parse') // still error prone
+export class SomeService {
 
     constructor(
-        $http: angular.IHttpService, 
-        private $$parse: angular.IParseService
+        private $http: angular.IHttpService, 
+        private $parse: angular.IParseService
     ) {
-        // do stuff with $http and $$parse;
+        // do stuff with $http and $parse;
     }
     
     public someMethod(anArg: number): boolean {
-        // do some stuff with this.$$parse();
+        // do some stuff with this.$parse();
     }
 
 }
+```
+
+and in the main module:
+
+```typescript
+//# some.module.ts
+
+import {autoDeclare} from 'angular-typescript/at-angular';
+import {SomeService} from 'some.service.ts';
+
+export someModule = autoDeclare('someModule', [], [SomeService]);
 ```
 
 ***
 
 ### Controller
 
+Without annotations we have to:
 
 ```typescript
-@controller('ngModuleName', 'SomeController')
-class SomeController {
+//# some.controller.ts
+
+export class SomeController {
+
+    static $inject = ['$scope', '$parse'];
 
     constructor(
-        @inject('$scope') $scope: angular.IScope,
-        @inject('$parse') private $$parse: angular.IParseService
+        private $scope: IScope,
+        private $parse: IParseService
     ) {
         // do stuff with $scope and $$parse;
     }
@@ -138,104 +207,230 @@ class SomeController {
     public someMethod(anArg: number): boolean {
         // do some stuff with this.$$parse();
     }
-
 }
+```
+
+and in the main module:
+
+```typescript
+//# some.module.ts
+
+import {SomeService} from 'some.service.ts';
+
+export someModule = angular.module('someModule', []).service('someController', SomeController);
+```
+
+Using **angular-typescript** it will look like:
+
+```typescript
+@Controller()
+export class SomeController {
+
+    constructor(
+        @inject('$scope') private $scope: angular.IScope,
+        @inject('$parse') private $parse: angular.IParseService
+    ) {
+        // do stuff with $scope and $$parse;
+    }
+    
+    public someMethod(anArg: number): boolean {
+        // do some stuff with this.$$parse();
+    }
+}
+```
+
+and in the main module:
+
+```typescript
+//# some.module.ts
+
+import {SomeService} from 'some.service.ts';
+
+export someModule = autoDeclare('someModule', [], [SomeController]);
 ```
 
 ***
 
 ### Directive
 
-Static class members of directive controller are used as config directive config.
+Without annotations we have to do:
 
 ```typescript
-@directive('ngModuleName', 'atSomeDirective')
-class SomeDirectiveController {
+//# test.dircetive.ts
 
-    public static controllerAs: 'someDirectiveCtrl';
-    public static templateUrl: string = '/partials/some-directive.html';
-    public static link: angular.IDirectiveLinkFn = (scope, element, attrs, ctrl: SomeDirectiveController) => {
-        ctrl.init(attrs.atSomeDirective);
-    };
+class TestDirective {
 
-    constructor(
-        @inject('$scope') private $$scope: angular.IScope,
-        @inject('$parse') private $$parse: angular.IParseService
-    ) {
-        // do stuff with $$scope and $$parse;
-    }
-    
-    public init(anArg: string): boolean {
-        // do some stuff with this.$$parse and this.$$scope
-    }
+  // And the rest are simple Ctrl instance members
+  name: string;
 
+  constructor(private $scope: IFirstComponentScope,
+              private $parse: IParseService) {
+    $scope.name = this.name = 'FirstTestCtrl';
+  }
+
+  setCtrlName(name: string): void {
+    this.$parse('name').assign(this, name);
+  }
 }
+
+export const testDirectiveConfig = {
+  name: 'testDirective',
+  restrict: 'E',
+  link: (scope, element, attrs, ctrl: TestDirective) => {
+    element.addClass('test-component');
+    ctrl.setCtrlName('FAKE_CTRL_NAME');
+  },
+  controller: TestDirective
+  controllerAs: 'ctrl',
+  template: '<span>{{ name }}</span><span>{{ ctrl.name }}</span>'
+};
+```
+
+and in the main module:
+
+```typescript
+//# some.module.ts
+
+import {SomeService} from 'some.service.ts';
+
+export someModule = angular.module('someModule', []).service('testDirective', testDirectiveConfig);
+```
+
+Using **angular-typescript** it will look like:
+
+```typescript
+
+@Directive({
+  name: 'testDirective',
+  restrict: 'E',
+  link: (scope, element, attrs, ctrl: TestDirective) => {
+    element.addClass('test-component');
+    ctrl.setCtrlName('FAKE_CTRL_NAME');
+  },
+  controllerAs: 'ctrl',
+  template: '<span>{{ name }}</span><span>{{ ctrl.name }}</span>'
+})
+export class TestDirective {
+
+  // And the rest are simple Ctrl instance members
+  name: string;
+
+  constructor(@Inject('$scope') private $scope: IFirstComponentScope,
+              @Inject('$parse') private $parse: IParseService) {
+    $scope.name = this.name = 'FirstTestCtrl';
+  }
+
+  setCtrlName(name: string): void {
+    this.$parse('name').assign(this, name);
+  }
+}
+```
+
+and in the main module:
+
+```typescript
+//# some.module.ts
+
+import {TestDirective} from 'test.directive.ts';
+
+export someModule = autoDeclare('someModule', [], [TestDirective]);
 ```
 
 ***
 
-### ClassFactory
+### Factory
 
-If you use constructors/classes to create common entities a @classFactory can be useful. It passes constructor as angular service and attaches @inject's to it's prototype with leading '$$'.
+If you use constructors/classes to create common entities a `@ClassFactory` can be useful.
+It passes constructor as angular service and attaches `$inject`'s to it's prototype with leading `$`.
 
 ```typescript
-@classFactory('test', 'Headers')
-@inject('$http', '$parse')
-class Headers {
+//# test.factory.ts
 
-    public accept: string;
+import {Factory, Inject} from '../src/at-angular';
+import IParseService = angular.IParseService;
+import IHttpService = angular.IHttpService;
 
-    private $$http: angular.IHttpService;
-    private $$parse: angular.IParseService;
+@Factory()
+@Inject('$http', '$parse')
+export class TestFactory {
 
-    constructor() {
-        this.accept = this.$$parse('defaults.headers.common.Accept')(this.$$http);
-    }
+  public accept: string;
 
+  $http: IHttpService;
+  $parse: IParseService;
+
+  constructor() {
+    this.accept = this.$parse('defaults.headers.common.Accept')(this.$http);
+  }
 }
+
 ```
 
-and the somewhere else:
+then somewhere else:
 
 ```typescript
     …
-    constructor(
-        @inject('Headers') Headers: Headers
-    ) {
-        this.headers = new Headers();
+    constructor() {
+        this.testFactory = new TestFactory();
     }
     …
+```
+
+and finally in the main module:
+
+```typescript
+//# some.module.ts
+
+import {TestFactory} from 'test.factory.ts';
+
+export someModule = autoDeclare('someModule', [], [TestFactory]);
 ```
 
 ***
 
 ### Resource
 
-This one is somehow similar to @classFactory, but it also encapsulates magic powers of angular $resource. $resource configs are gathered from static class members (just like in @directive decorator).
+This one is somehow similar to `@ClassFactory`, but it also encapsulates magic powers of angular `$resource`.
+ `$resource` configs are gathered from static class members.
 
 ```typescript
-@resource('test', 'UserResource')
-@inject('$http', '$parse')
-class UserResource extends at.Resource {
+//# user.resource.ts
 
-    public static url: string = '/fake/url';
+import {Resource, BaseResource} from "../src/at-angular-resource";
+import {Inject} from "../src/at-angular";
+import IHttpService = angular.IHttpService;
+import IParseService = angular.IParseService;
 
-    public name: string;
-    public age: number;
+interface IUser {
+  name: string;
+  age: number;
+}
 
-    private $$http: angular.IHttpService;
-    private $$parse: angular.IParseService;
+@Resource()
+@Inject('$http', '$parse')
+export class UserResource extends BaseResource implements IUser {
+  // And to keep proper type, you may add "extends at.Resource"
 
-    constructor(model?: ITestModel) {
-        if (model) {
-            this.name = model.name;
-            this.age = model.age;
-        }
+  static url: string = '/fake/url';
+
+  name: string;
+  age: number;
+
+  private $http: IHttpService;
+  private $parse: IParseService;
+
+  constructor(model?: IUser) {
+    super(model);
+    /* istanbul ignore else */
+    if (model) {
+      this.name = model.name;
+      this.age = model.age;
     }
+  }
 
-    public getLabel(): string {
-        return `${ this.name }-${ String(this.age) }`;
-    }
+  getLabel(): string {
+    return this.$parse('defaults.headers.common.Accept')(this.$http) + this.name + String(this.age);
+  }
 
 }
 ```

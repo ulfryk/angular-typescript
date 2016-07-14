@@ -1,19 +1,13 @@
-module test {
+import {Inject, Service} from '../src/at-angular';
+import IParseService = angular.IParseService;
+import IHttpService = angular.IHttpService;
 
-    'use strict';
+@Service()
+@Inject('$http', '$parse')
+export class TestServiceOne {
 
-    @inject('$http', '$parse')
-    export class TestServiceOne {
-
-        constructor(
-            /* tslint:disable:variable-name */
-            private $$http: angular.IHttpService,
-            private $$parse: angular.IParseService
-            /* tslint:enable:variable-name */
-        ) {}
-
-    }
-
-    angular.module('test').service('testServiceOne', TestServiceOne);
+  constructor(private $http: IHttpService,
+              private $parse: IParseService) {
+  }
 
 }

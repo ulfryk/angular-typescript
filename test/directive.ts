@@ -1,51 +1,32 @@
-module test {
+import {Directive, Inject} from '../src/at-angular';
+import IScope = angular.IScope;
+import IParseService = angular.IParseService;
 
-    'use strict';
+interface IFirstComponentScope extends IScope {
+  name: string;
+}
 
-    interface IFirstComponentScope extends angular.IScope {
-        name: string;
-    }
+@Directive({
+  name: 'testDirective',
+  restrict: 'E',
+  link: (scope, element, attrs, ctrl: TestDirective) => {
+    element.addClass('test-component');
+    ctrl.setCtrlName('FAKE_CTRL_NAME');
+  },
+  controllerAs: 'ctrl',
+  template: '<span>{{name}}</span><span>{{ctrl.name}}</span>'
+})
+export class TestDirective {
 
-    @directive('test', 'atTestComponent')
-    export class TestComponentCtrl {
+  // And the rest are simple Ctrl instance members
+  name: string;
 
-        // Static fields hold directive configuration
-        public static controller: string = 'TestComponentCtrl as ctrl';
+  constructor(@Inject('$scope') private $scope: IFirstComponentScope,
+              @Inject('$parse') private $parse: IParseService) {
+    $scope.name = this.name = 'FirstTestCtrl';
+  }
 
-        public static restrict: string = 'E';
-
-        public static link: angular.IDirectiveLinkFn = (
-            scope: IFirstComponentScope,
-            element: angular.IAugmentedJQuery,
-            attrs: angular.IAttributes,
-            ctrl: TestComponentCtrl
-        ) => {
-            ctrl.setCtrlName('FAKE_CTRL_NAME');
-        };
-
-        public static template: angular.IDirectiveCompileFn = (tElement: angular.IAugmentedJQuery) => {
-            tElement.addClass('test-component');
-            return '<span>{{ name }}</span><span>{{ ctrl.name }}</span>';
-        };
-
-        // And the rest are simple Ctrl instance members
-        /* tslint:disable:member-ordering */
-        public name: string;
-        /* tslint:enable:member-ordering */
-
-        constructor(
-            @inject('$scope') $scope: IFirstComponentScope,
-            /* tslint:disable:variable-name */
-            @inject('$parse') private $$parse: angular.IParseService
-            /* tslint:enable:variable-name */
-        ) {
-            $scope.name = this.name = 'FirstTestCtrl';
-        }
-
-        public setCtrlName(name: string): void {
-            this.$$parse('name').assign(this, name);
-        }
-
-    }
-
+  setCtrlName(name: string): void {
+    this.$parse('name').assign(this, name);
+  }
 }

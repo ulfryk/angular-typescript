@@ -1,14 +1,23 @@
-module test {
+import {autoDeclare} from '../src/at-angular';
+import {TestServiceTwo} from './service';
+import {TestServiceThree} from './inject-and-service';
+import {FirstTestCtrl} from './controller';
+import {TestComponent} from './component';
+import {TestDirective} from './directive';
+import {TestFactory} from './class-factory';
+import {UserResource} from './resource';
+import {TestServiceOne} from './inject';
 
-    'use strict';
-
-    export const inject: at.IInjectAnnotation = at.inject;
-    export const service: at.IServiceAnnotation = at.service;
-    export const controller: at.IControllerAnnotation = at.controller;
-    export const directive: at.IDirectiveAnnotation = at.directive;
-    export const classFactory: at.IClassFactoryAnnotation = at.classFactory;
-    export const resource: at.IResourceAnnotation = at.resource;
-
-    angular.module('test', ['ngResource']);
-
-}
+export let testModule = autoDeclare('test',
+  [
+    'ngResource'
+  ], [
+    TestServiceOne,
+    TestServiceTwo,
+    TestServiceThree,
+    FirstTestCtrl,
+    TestComponent,
+    TestDirective,
+    TestFactory,
+    UserResource
+  ]);
