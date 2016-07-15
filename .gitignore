@@ -14,4 +14,10 @@ coverage/
 # Dependency directory
 node_modules/
 bower_components/
-typings/
+/angular-typescript.iml
+/.idea/
+/typings/
+/dist/test/
+/test/**/*.js
+/test/**/*.js.map
+!/test/test-main.ts

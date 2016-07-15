@@ -1,7 +1,11 @@
 {
+  "name": "angular-typescript",
+  "dependencies": {},
   "globalDependencies": {
     "angular": "registry:dt/angular#1.5.0+20160627105203",
+    "angular-mocks": "registry:dt/angular-mocks#1.5.0+20160608104721",
     "angular-resource": "registry:dt/angular-resource#1.5.0+20160613142217",
+    "jasmine": "registry:dt/jasmine#2.2.0+20160621224255",
     "jquery": "registry:dt/jquery#1.10.0+20160704162008"
   }
 }

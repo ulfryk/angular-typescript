@@ -1,13 +1,5 @@
-'use strict';
+import gulp from 'gulp';
+import sequence from 'gulp-sequence';
 
-var gulp = require('gulp');
-var runSequence = require('run-sequence');
 
-gulp.task('coverage', function (done) {
-    runSequence(
-        'clean-tmp',
-        'ts',
-        'karma-coverage',
-        done
-    );
-});
+gulp.task('coverage', sequence('clean', 'ts', 'karma-coverage'));

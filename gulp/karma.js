@@ -1,17 +1,14 @@
-'use strict';
+import gulp from "gulp";
 
-var gulp = require('gulp');
+const config = __dirname + '/../karma.conf.js';
+const Server = require('karma').Server;
 
-var config = __dirname + '/karma.conf.js';
-var Server = require('karma').Server;
-var runSequence = require('run-sequence');
-
-gulp.task('karma-tdd', function (done) {
+gulp.task('karma-tdd', ['ts'], function (done) {
     return new Server({
         configFile: config,
         coverageReporter: {
             type : 'html',
-            dir : '../.tmp/coverage/'
+            dir : '../coverage/'
         },
         browsers: ['Chrome']
     }, done).start();
@@ -44,19 +41,9 @@ gulp.task('karma-coverage', function (done) {
         configFile: config,
         coverageReporter: {
             type : 'html',
-            dir : '../.tmp/coverage/'
+            dir : '../coverage/'
         },
         singleRun: true,
         autoWatch: false
     }, done).start();
-});
-
-
-gulp.task('coverage', function (done) {
-    runSequence(
-        'clean-tmp',
-        'ts',
-        'karma-coverage',
-        done
-    );
 });

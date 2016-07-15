@@ -1,24 +1,18 @@
-module test {
+import {Controller, Inject} from '../src/at-angular';
+import IScope = angular.IScope;
+import IParseService = angular.IParseService;
 
-    'use strict';
+interface IFirstScope extends IScope {
+  name: string;
+}
 
-    interface IFirstScope extends angular.IScope {
-        name: string;
-    }
+@Controller()
+@Inject('$scope', '$parse')
+export class FirstTestCtrl {
 
-    @controller('test', 'FirstTestCtrl')
-    @inject('$scope', '$parse')
-    export class FirstTestCtrl {
-
-        constructor(
-            $scope: IFirstScope,
-            /* tslint:disable:variable-name */
-            private $$parse: angular.IParseService
-            /* tslint:enable:variable-name */
-        ) {
-            $scope.name = 'FirstTestCtrl';
-        }
-
-    }
+  constructor($scope: IFirstScope,
+              private $parse: IParseService) {
+    $scope.name = 'FirstTestCtrl';
+  }
 
 }

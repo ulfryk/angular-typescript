@@ -1,22 +1,17 @@
-module test {
+import {Factory, Inject} from '../src/at-angular';
+import IParseService = angular.IParseService;
+import IHttpService = angular.IHttpService;
 
-    'use strict';
+@Factory()
+@Inject('$http', '$parse')
+export class TestFactory {
 
-    @classFactory('test', 'TestClassOne')
-    @inject('$http', '$parse')
-    export class TestClassOne {
+  public accept: string;
 
-        public accept: string;
+  $http: IHttpService;
+  $parse: IParseService;
 
-        /* tslint:disable:variable-name */
-        private $$http: angular.IHttpService;
-        private $$parse: angular.IParseService;
-        /* tslint:enable:variable-name */
-
-        constructor() {
-            this.accept = this.$$parse('defaults.headers.common.Accept')(this.$$http);
-        }
-
-    }
-
+  constructor() {
+    this.accept = this.$parse('defaults.headers.common.Accept')(this.$http);
+  }
 }
