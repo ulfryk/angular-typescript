@@ -62,6 +62,14 @@ module at {
         return instantiate(moduleName, serviceName, 'service');
     }
 
+    export interface IComponentAnnotation {
+        (moduleName: string, componentName: string): IClassAnnotationDecorator;
+    }
+
+    export function component(moduleName: string, componentName: string): at.IClassAnnotationDecorator {
+        return instantiate(moduleName, componentName, 'component');
+    }
+
     export interface IControllerAnnotation {
         (moduleName: string, ctrlName: string): IClassAnnotationDecorator;
     }

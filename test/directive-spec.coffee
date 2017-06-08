@@ -10,7 +10,7 @@ describe 'annotations:', ->
 
     beforeEach inject ($compile, $rootScope) ->
       $scope = $rootScope.$new()
-      element = $compile('<at-test-component></at-test-component>')($scope)
+      element = $compile('<at-test-directive></at-test-directive>')($scope)
       $rootScope.$digest()
 
     it 'should be defined', ->
@@ -24,16 +24,16 @@ describe 'annotations:', ->
       .toBeDefined()
 
       expect $scope.ctrl
-      .toEqual jasmine.any test.TestComponentCtrl
+      .toEqual jasmine.any test.TestDirectiveCtrl
 
     it 'should assign proper $inject array to service constructor', ->
 
-      expect test.TestComponentCtrl.$inject
+      expect test.TestDirectiveCtrl.$inject
       .toEqual ['$scope', '$parse']
 
     it 'should execute directive on element', ->
 
-      expect element.hasClass 'test-component'
+      expect element.hasClass 'test-directive'
       .toBe true
 
       expect $scope.name
@@ -44,5 +44,3 @@ describe 'annotations:', ->
 
       expect element.text()
       .toBe $scope.name + $scope.ctrl.name
-
-

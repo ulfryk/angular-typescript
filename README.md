@@ -25,6 +25,7 @@ What ?
 ```
 @at.service(moduleName: string, serviceName: string)
 @at.inject(dependencyOne: string, ...dependencies?: string[])
+@at.component(moduleName: string, componentName: string)
 @at.controller(moduleName: string, controllerName: string)
 @at.directive(moduleName: string, directiveName: string)
 @at.classFactory(moduleName: string, className: string)
@@ -114,6 +115,33 @@ class SomeService {
     
     public someMethod(anArg: number): boolean {
         // do some stuff with this.$$parse();
+    }
+
+}
+```
+
+***
+
+### Component
+
+Static class members of component controller are used as component config object.
+
+```typescript
+@component('ngModuleName', 'atSomeComponent')
+class SomeComponentController {
+
+    public static bindings: Object = {
+      someBinding: '@'  
+    };
+    public static template: string = '<div><h1>{{ $ctrl.someBinding }}</h1></div>';
+    // or
+    public static templateUrl: string = './some-component.html';
+
+    constructor(
+        @inject('$scope') private $$scope: angular.IScope,
+        @inject('$parse') private $$parse: angular.IParseService
+    ) {
+        // do stuff with $$scope and $$parse;
     }
 
 }

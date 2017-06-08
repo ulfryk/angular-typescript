@@ -6,11 +6,11 @@ module test {
         name: string;
     }
 
-    @directive('test', 'atTestComponent')
-    export class TestComponentCtrl {
+    @directive('test', 'atTestDirective')
+    export class TestDirectiveCtrl {
 
         // Static fields hold directive configuration
-        public static controller: string = 'TestComponentCtrl as ctrl';
+        public static controller: string = 'TestDirectiveCtrl as ctrl';
 
         public static restrict: string = 'E';
 
@@ -18,13 +18,13 @@ module test {
             scope: IFirstComponentScope,
             element: angular.IAugmentedJQuery,
             attrs: angular.IAttributes,
-            ctrl: TestComponentCtrl
+            ctrl: TestDirectiveCtrl
         ) => {
             ctrl.setCtrlName('FAKE_CTRL_NAME');
         };
 
         public static template: angular.IDirectiveCompileFn = (tElement: angular.IAugmentedJQuery) => {
-            tElement.addClass('test-component');
+            tElement.addClass('test-directive');
             return '<span>{{ name }}</span><span>{{ ctrl.name }}</span>';
         };
 
